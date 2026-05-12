@@ -7,11 +7,11 @@ preplace inst HDL.hps_0.timer2 -pg 1
 preplace inst HDL.hps_0.clkmgr -pg 1
 preplace inst HDL.hps_0.gpio0 -pg 1
 preplace inst HDL.hps_0.timer3 -pg 1
-preplace inst HDL.pio_data_out -pg 1 -lvl 3 -y 130
+preplace inst HDL.pio_data_out -pg 1 -lvl 3 -y 220
 preplace inst HDL.hps_0.gpio1 -pg 1
 preplace inst HDL.hps_0.fpgamgr -pg 1
 preplace inst HDL.hps_0.hps_io -pg 1
-preplace inst HDL.clk_0 -pg 1 -lvl 1 -y 130
+preplace inst HDL.clk_0 -pg 1 -lvl 1 -y 220
 preplace inst HDL.hps_0.usb0 -pg 1
 preplace inst HDL.hps_0.gpio2 -pg 1
 preplace inst HDL.hps_0.wd_timer0 -pg 1
@@ -46,21 +46,24 @@ preplace inst HDL.hps_0.uart1 -pg 1
 preplace inst HDL.hps_0.f2s_sdram_ref_clk -pg 1
 preplace inst HDL.hps_0.eosc2 -pg 1
 preplace inst HDL.hps_0.hps_io.border -pg 1
-preplace inst HDL.hps_0 -pg 1 -lvl 2 -y 50
+preplace inst HDL.hps_0 -pg 1 -lvl 2 -y 140
 preplace inst HDL.hps_0.sdrctl -pg 1
 preplace inst HDL.hps_0.dcan0 -pg 1
 preplace inst HDL.hps_0.spim1 -pg 1
-preplace inst HDL.pio_data_in -pg 1 -lvl 3 -y 30
+preplace inst HDL.pio_data_in -pg 1 -lvl 3 -y 120
 preplace inst HDL.hps_0.dcan1 -pg 1
 preplace inst HDL.hps_0.timer0 -pg 1
 preplace inst HDL.hps_0.sysmgr -pg 1
-preplace inst HDL.pio_signals -pg 1 -lvl 3 -y 230
+preplace inst HDL.pio_signals -pg 1 -lvl 3 -y 320
 preplace inst HDL.hps_0.timer1 -pg 1
-preplace netloc EXPORT<net_container>HDL</net_container>(SLAVE)hps_0.memory,(SLAVE)HDL.memory) 1 0 2 NJ 200 NJ
-preplace netloc EXPORT<net_container>HDL</net_container>(SLAVE)clk_0.clk_in,(SLAVE)HDL.clk) 1 0 1 NJ
-preplace netloc FAN_OUT<net_container>HDL</net_container>(MASTER)clk_0.clk_reset,(SLAVE)pio_data_in.reset,(SLAVE)pio_data_out.reset,(SLAVE)pio_signals.reset) 1 1 2 NJ 270 630
-preplace netloc FAN_OUT<net_container>HDL</net_container>(SLAVE)pio_data_out.s1,(MASTER)hps_0.h2f_axi_master,(SLAVE)pio_data_in.s1,(SLAVE)pio_signals.s1) 1 2 1 590
+preplace netloc EXPORT<net_container>HDL</net_container>(SLAVE)hps_0.memory,(SLAVE)HDL.memory) 1 0 2 NJ 290 NJ
+preplace netloc FAN_OUT<net_container>HDL</net_container>(SLAVE)pio_signals.clk,(SLAVE)hps_0.f2h_sdram0_clock,(SLAVE)hps_0.f2h_axi_clock,(SLAVE)pio_data_in.clk,(SLAVE)hps_0.h2f_lw_axi_clock,(SLAVE)hps_0.h2f_axi_clock,(MASTER)clk_0.clk,(SLAVE)pio_data_out.clk) 1 1 2 430 60 780
+preplace netloc EXPORT<net_container>HDL</net_container>(SLAVE)pio_data_out.external_connection,(SLAVE)HDL.pio_data_out_external_connection) 1 0 3 NJ 100 NJ 100 NJ
+preplace netloc FAN_OUT<net_container>HDL</net_container>(MASTER)clk_0.clk_reset,(SLAVE)pio_data_out.reset,(SLAVE)pio_data_in.reset,(SLAVE)pio_signals.reset) 1 1 2 410 80 740
+preplace netloc EXPORT<net_container>HDL</net_container>(SLAVE)HDL.pio_data_in_external_connection,(SLAVE)pio_data_in.external_connection) 1 0 3 NJ 40 NJ 40 NJ
+preplace netloc EXPORT<net_container>HDL</net_container>(SLAVE)HDL.clk,(SLAVE)clk_0.clk_in) 1 0 1 NJ
+preplace netloc FAN_OUT<net_container>HDL</net_container>(SLAVE)pio_data_in.s1,(SLAVE)pio_signals.s1,(SLAVE)pio_data_out.s1,(MASTER)hps_0.h2f_axi_master) 1 2 1 800
 preplace netloc EXPORT<net_container>HDL</net_container>(SLAVE)HDL.reset,(SLAVE)clk_0.clk_in_reset) 1 0 1 NJ
-preplace netloc FAN_OUT<net_container>HDL</net_container>(SLAVE)hps_0.f2h_axi_clock,(SLAVE)hps_0.f2h_sdram0_clock,(SLAVE)pio_data_out.clk,(MASTER)clk_0.clk,(SLAVE)pio_signals.clk,(SLAVE)hps_0.h2f_lw_axi_clock,(SLAVE)hps_0.h2f_axi_clock,(SLAVE)pio_data_in.clk) 1 1 2 280 250 610
-levelinfo -pg 1 0 50 820
-levelinfo -hier HDL 60 90 400 660 810
+preplace netloc EXPORT<net_container>HDL</net_container>(SLAVE)HDL.pio_signals_external_connection,(SLAVE)pio_signals.external_connection) 1 0 3 NJ 350 NJ 350 NJ
+levelinfo -pg 1 0 200 990
+levelinfo -hier HDL 210 240 550 830 980

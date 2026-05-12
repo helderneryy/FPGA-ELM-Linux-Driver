@@ -25,9 +25,6 @@ Warning: HDL.hps_0: ODT is disabled. Enabling ODT (Mode Register 1) may improve 
 Warning: HDL.hps_0: set_interface_assignment: Interface "hps_io" does not exist
 Info: HDL.pio_data_out: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
 Warning: HDL.hps_0: hps_0.h2f_mpu_events must be exported, or connected to a matching conduit.
-Warning: HDL.pio_data_in: pio_data_in.external_connection must be exported, or connected to a matching conduit.
-Warning: HDL.pio_data_out: pio_data_out.external_connection must be exported, or connected to a matching conduit.
-Warning: HDL.pio_signals: pio_signals.external_connection must be exported, or connected to a matching conduit.
 Info: qsys-generate succeeded.
 Info: Finished: Create block symbol file (.bsf)
 Info: 
@@ -58,9 +55,6 @@ Warning: HDL.hps_0: ODT is disabled. Enabling ODT (Mode Register 1) may improve 
 Warning: HDL.hps_0: set_interface_assignment: Interface "hps_io" does not exist
 Info: HDL.pio_data_out: PIO inputs are not hardwired in test bench. Undefined values will be read from PIO inputs during simulation.
 Warning: HDL.hps_0: hps_0.h2f_mpu_events must be exported, or connected to a matching conduit.
-Warning: HDL.pio_data_in: pio_data_in.external_connection must be exported, or connected to a matching conduit.
-Warning: HDL.pio_data_out: pio_data_out.external_connection must be exported, or connected to a matching conduit.
-Warning: HDL.pio_signals: pio_signals.external_connection must be exported, or connected to a matching conduit.
 Info: HDL: Generating "HDL" for QUARTUS_SYNTH
 Info: hps_0: "Running  for module: hps_0"
 Info: hps_0: HPS Main PLL counter settings: n = 0  m = 73
@@ -72,7 +66,7 @@ Warning: hps_0: ODT is disabled. Enabling ODT (Mode Register 1) may improve sign
 Warning: hps_0: set_interface_assignment: Interface "hps_io" does not exist
 Info: hps_0: "HDL" instantiated altera_hps "hps_0"
 Info: pio_data_in: Starting RTL generation for module 'HDL_pio_data_in'
-Info: pio_data_in:   Generation command is [exec /opt/intelFPGA_lite/25.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA_lite/25.1/quartus/linux64/perl/lib -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=HDL_pio_data_in --dir=/tmp/alt0581_3906603359974207404.dir/0002_pio_data_in_gen/ --quartus_dir=/opt/intelFPGA_lite/25.1/quartus --verilog --config=/tmp/alt0581_3906603359974207404.dir/0002_pio_data_in_gen//HDL_pio_data_in_component_configuration.pl  --do_build_sim=0  ]
+Info: pio_data_in:   Generation command is [exec /opt/intelFPGA_lite/25.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA_lite/25.1/quartus/linux64/perl/lib -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=HDL_pio_data_in --dir=/tmp/alt0581_4482295596849629820.dir/0002_pio_data_in_gen/ --quartus_dir=/opt/intelFPGA_lite/25.1/quartus --verilog --config=/tmp/alt0581_4482295596849629820.dir/0002_pio_data_in_gen//HDL_pio_data_in_component_configuration.pl  --do_build_sim=0  ]
 Info: pio_data_in: perl: warning: Setting locale failed.
 Info: pio_data_in: perl: warning: Please check that your locale settings:
 Info: pio_data_in: 	LANGUAGE = (unset),
@@ -84,7 +78,7 @@ Info: pio_data_in: perl: warning: Falling back to the standard locale ("C").
 Info: pio_data_in: Done RTL generation for module 'HDL_pio_data_in'
 Info: pio_data_in: "HDL" instantiated altera_avalon_pio "pio_data_in"
 Info: pio_data_out: Starting RTL generation for module 'HDL_pio_data_out'
-Info: pio_data_out:   Generation command is [exec /opt/intelFPGA_lite/25.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA_lite/25.1/quartus/linux64/perl/lib -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=HDL_pio_data_out --dir=/tmp/alt0581_3906603359974207404.dir/0003_pio_data_out_gen/ --quartus_dir=/opt/intelFPGA_lite/25.1/quartus --verilog --config=/tmp/alt0581_3906603359974207404.dir/0003_pio_data_out_gen//HDL_pio_data_out_component_configuration.pl  --do_build_sim=0  ]
+Info: pio_data_out:   Generation command is [exec /opt/intelFPGA_lite/25.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA_lite/25.1/quartus/linux64/perl/lib -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=HDL_pio_data_out --dir=/tmp/alt0581_4482295596849629820.dir/0003_pio_data_out_gen/ --quartus_dir=/opt/intelFPGA_lite/25.1/quartus --verilog --config=/tmp/alt0581_4482295596849629820.dir/0003_pio_data_out_gen//HDL_pio_data_out_component_configuration.pl  --do_build_sim=0  ]
 Info: pio_data_out: perl: warning: Setting locale failed.
 Info: pio_data_out: perl: warning: Please check that your locale settings:
 Info: pio_data_out: 	LANGUAGE = (unset),
@@ -96,7 +90,7 @@ Info: pio_data_out: perl: warning: Falling back to the standard locale ("C").
 Info: pio_data_out: Done RTL generation for module 'HDL_pio_data_out'
 Info: pio_data_out: "HDL" instantiated altera_avalon_pio "pio_data_out"
 Info: pio_signals: Starting RTL generation for module 'HDL_pio_signals'
-Info: pio_signals:   Generation command is [exec /opt/intelFPGA_lite/25.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA_lite/25.1/quartus/linux64/perl/lib -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=HDL_pio_signals --dir=/tmp/alt0581_3906603359974207404.dir/0004_pio_signals_gen/ --quartus_dir=/opt/intelFPGA_lite/25.1/quartus --verilog --config=/tmp/alt0581_3906603359974207404.dir/0004_pio_signals_gen//HDL_pio_signals_component_configuration.pl  --do_build_sim=0  ]
+Info: pio_signals:   Generation command is [exec /opt/intelFPGA_lite/25.1/quartus/linux64/perl/bin/perl -I /opt/intelFPGA_lite/25.1/quartus/linux64/perl/lib -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin/europa -I /opt/intelFPGA_lite/25.1/quartus/sopc_builder/bin -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/common -I /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio -- /opt/intelFPGA_lite/25.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_pio/generate_rtl.pl --name=HDL_pio_signals --dir=/tmp/alt0581_4482295596849629820.dir/0004_pio_signals_gen/ --quartus_dir=/opt/intelFPGA_lite/25.1/quartus --verilog --config=/tmp/alt0581_4482295596849629820.dir/0004_pio_signals_gen//HDL_pio_signals_component_configuration.pl  --do_build_sim=0  ]
 Info: pio_signals: perl: warning: Setting locale failed.
 Info: pio_signals: perl: warning: Please check that your locale settings:
 Info: pio_signals: 	LANGUAGE = (unset),

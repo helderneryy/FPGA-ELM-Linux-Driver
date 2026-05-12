@@ -16,9 +16,9 @@
 		.memory_mem_odt                          (<connected-to-memory_mem_odt>),                          //                                 .mem_odt
 		.memory_mem_dm                           (<connected-to-memory_mem_dm>),                           //                                 .mem_dm
 		.memory_oct_rzqin                        (<connected-to-memory_oct_rzqin>),                        //                                 .oct_rzqin
-		.reset_reset_n                           (<connected-to-reset_reset_n>),                           //                            reset.reset_n
 		.pio_data_in_external_connection_export  (<connected-to-pio_data_in_external_connection_export>),  //  pio_data_in_external_connection.export
+		.pio_data_out_external_connection_export (<connected-to-pio_data_out_external_connection_export>), // pio_data_out_external_connection.export
 		.pio_signals_external_connection_export  (<connected-to-pio_signals_external_connection_export>),  //  pio_signals_external_connection.export
-		.pio_data_out_external_connection_export (<connected-to-pio_data_out_external_connection_export>)  // pio_data_out_external_connection.export
+		.reset_reset_n                           (<connected-to-reset_reset_n>)                            //                            reset.reset_n
 	);
 
