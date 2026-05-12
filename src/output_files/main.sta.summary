@@ -3,339 +3,339 @@ Timing Analyzer Summary
 ------------------------------------------------------------
 
 Type  : Slow 1100mV 85C Model Setup 'clk'
-Slack : -10.152
-TNS   : -39493.850
+Slack : -9.796
+TNS   : -38499.673
 
 Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : -8.749
-TNS   : -91.146
+Slack : -8.992
+TNS   : -92.504
 
 Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : -7.334
-TNS   : -137.820
+Slack : -7.663
+TNS   : -142.367
 
 Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : -4.499
-TNS   : -32.971
+Slack : -4.907
+TNS   : -33.757
 
 Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : -3.461
-TNS   : -3.461
+Slack : -4.303
+TNS   : -4.303
 
 Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : -3.084
-TNS   : -8.081
+Slack : -3.363
+TNS   : -8.462
 
 Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|state.ARGMAX'
-Slack : -2.255
-TNS   : -2.255
+Slack : -1.760
+TNS   : -1.760
 
 Type  : Slow 1100mV 85C Model Hold 'clk'
-Slack : 0.219
+Slack : 0.220
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.743
+Slack : 0.222
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.844
+Slack : 0.677
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.909
+Slack : 0.788
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 1.523
+Slack : 1.064
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 2.068
+Slack : 2.733
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 2.863
+Slack : 3.006
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'clk'
 Slack : -2.636
-TNS   : -33381.415
+TNS   : -33392.191
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.043
-TNS   : 0.000
-
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 0.171
+Slack : 0.216
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 0.240
-TNS   : 0.000
-
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.289
-TNS   : 0.000
-
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 0.378
+Slack : 0.267
 TNS   : 0.000
 
 Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.397
+Slack : 0.273
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
+Slack : 0.285
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
+Slack : 0.414
+TNS   : 0.000
+
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
+Slack : 0.435
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Setup 'clk'
-Slack : -10.085
-TNS   : -38376.242
+Slack : -9.623
+TNS   : -37394.093
 
 Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : -8.933
-TNS   : -92.570
+Slack : -9.221
+TNS   : -93.981
 
 Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : -7.404
-TNS   : -138.046
+Slack : -7.712
+TNS   : -142.593
 
 Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : -4.703
-TNS   : -33.715
+Slack : -5.012
+TNS   : -34.373
 
 Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : -3.683
-TNS   : -3.683
+Slack : -4.376
+TNS   : -4.376
 
 Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : -3.020
-TNS   : -8.421
+Slack : -3.464
+TNS   : -8.703
 
 Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|state.ARGMAX'
-Slack : -2.261
-TNS   : -2.261
+Slack : -1.748
+TNS   : -1.748
 
 Type  : Slow 1100mV 0C Model Hold 'clk'
-Slack : 0.046
-TNS   : 0.000
+Slack : -0.033
+TNS   : -0.033
 
 Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.612
+Slack : 0.153
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.745
+Slack : 0.572
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.884
+Slack : 0.789
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 1.495
+Slack : 0.999
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 2.196
+Slack : 2.745
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 2.919
+Slack : 3.056
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'clk'
 Slack : -2.636
-TNS   : -33405.920
+TNS   : -33410.295
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.013
-TNS   : 0.000
-
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 0.162
-TNS   : 0.000
-
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.245
-TNS   : 0.000
-
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 0.303
+Slack : 0.221
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 0.328
+Slack : 0.264
 TNS   : 0.000
 
 Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.389
+Slack : 0.277
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
+Slack : 0.304
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
+Slack : 0.391
+TNS   : 0.000
+
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
+Slack : 0.415
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Setup 'clk'
-Slack : -5.423
-TNS   : -21317.552
+Slack : -5.332
+TNS   : -20592.802
 
 Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : -4.598
-TNS   : -47.828
+Slack : -4.735
+TNS   : -47.885
 
 Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : -3.734
-TNS   : -68.997
-
-Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : -2.149
-TNS   : -3.763
+Slack : -3.901
+TNS   : -72.104
 
 Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : -2.148
-TNS   : -14.569
+Slack : -2.431
+TNS   : -15.063
 
 Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : -1.301
-TNS   : -1.301
+Slack : -1.908
+TNS   : -1.908
+
+Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|state.FIRST_LAYER'
+Slack : -1.510
+TNS   : -3.928
 
 Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|state.ARGMAX'
-Slack : -1.285
-TNS   : -1.285
+Slack : -1.062
+TNS   : -1.062
 
 Type  : Fast 1100mV 85C Model Hold 'clk'
 Slack : 0.129
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.513
-TNS   : 0.000
-
-Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.519
+Slack : 0.236
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.571
+Slack : 0.472
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 1.087
+Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|state.FIRST_LAYER'
+Slack : 0.524
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 1.308
+Slack : 1.012
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
+Slack : 1.565
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 1.598
+Slack : 1.686
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'clk'
 Slack : -2.636
-TNS   : -32732.876
+TNS   : -32743.964
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.015
-TNS   : 0.000
-
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 0.146
+Slack : 0.235
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 0.299
-TNS   : 0.000
-
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.323
+Slack : 0.267
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.327
+Slack : 0.274
 TNS   : 0.000
 
 Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 0.377
+Slack : 0.362
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
+Slack : 0.412
+TNS   : 0.000
+
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
+Slack : 0.424
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Setup 'clk'
-Slack : -4.870
-TNS   : -18320.669
+Slack : -4.793
+TNS   : -17627.576
 
 Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : -4.317
-TNS   : -45.039
+Slack : -4.490
+TNS   : -45.392
 
 Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : -3.428
-TNS   : -63.819
+Slack : -3.622
+TNS   : -66.700
 
 Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : -2.122
-TNS   : -14.030
-
-Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : -1.820
-TNS   : -3.599
+Slack : -2.364
+TNS   : -14.509
 
 Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : -1.310
-TNS   : -1.310
+Slack : -1.835
+TNS   : -1.835
+
+Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|state.FIRST_LAYER'
+Slack : -1.516
+TNS   : -3.756
 
 Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|state.ARGMAX'
-Slack : -1.103
-TNS   : -1.103
+Slack : -0.891
+TNS   : -0.891
 
 Type  : Fast 1100mV 0C Model Hold 'clk'
-Slack : 0.118
+Slack : 0.119
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.402
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.548
+Slack : 0.183
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.616
+Slack : 0.427
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 1.126
+Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
+Slack : 0.438
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 1.148
+Slack : 0.865
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
+Slack : 1.543
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 1.572
+Slack : 1.655
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'clk'
 Slack : -2.636
-TNS   : -32742.215
+TNS   : -32754.420
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.073
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 0.210
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.327
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 0.338
+Slack : 0.269
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.351
+Slack : 0.305
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
+Slack : 0.314
 TNS   : 0.000
 
 Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 0.383
+Slack : 0.375
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
+Slack : 0.421
+TNS   : 0.000
+
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
+Slack : 0.442
 TNS   : 0.000
 
 ------------------------------------------------------------

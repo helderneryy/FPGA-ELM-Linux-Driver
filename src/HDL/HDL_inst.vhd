@@ -17,10 +17,10 @@
 			memory_mem_odt                          : out   std_logic;                                        -- mem_odt
 			memory_mem_dm                           : out   std_logic;                                        -- mem_dm
 			memory_oct_rzqin                        : in    std_logic                     := 'X';             -- oct_rzqin
-			reset_reset_n                           : in    std_logic                     := 'X';             -- reset_n
 			pio_data_in_external_connection_export  : out   std_logic_vector(31 downto 0);                    -- export
+			pio_data_out_external_connection_export : in    std_logic_vector(31 downto 0) := (others => 'X'); -- export
 			pio_signals_external_connection_export  : out   std_logic_vector(2 downto 0);                     -- export
-			pio_data_out_external_connection_export : in    std_logic_vector(31 downto 0) := (others => 'X')  -- export
+			reset_reset_n                           : in    std_logic                     := 'X'              -- reset_n
 		);
 	end component HDL;
 
@@ -43,9 +43,9 @@
 			memory_mem_odt                          => CONNECTED_TO_memory_mem_odt,                          --                                 .mem_odt
 			memory_mem_dm                           => CONNECTED_TO_memory_mem_dm,                           --                                 .mem_dm
 			memory_oct_rzqin                        => CONNECTED_TO_memory_oct_rzqin,                        --                                 .oct_rzqin
-			reset_reset_n                           => CONNECTED_TO_reset_reset_n,                           --                            reset.reset_n
 			pio_data_in_external_connection_export  => CONNECTED_TO_pio_data_in_external_connection_export,  --  pio_data_in_external_connection.export
+			pio_data_out_external_connection_export => CONNECTED_TO_pio_data_out_external_connection_export, -- pio_data_out_external_connection.export
 			pio_signals_external_connection_export  => CONNECTED_TO_pio_signals_external_connection_export,  --  pio_signals_external_connection.export
-			pio_data_out_external_connection_export => CONNECTED_TO_pio_data_out_external_connection_export  -- pio_data_out_external_connection.export
+			reset_reset_n                           => CONNECTED_TO_reset_reset_n                            --                            reset.reset_n
 		);
 
