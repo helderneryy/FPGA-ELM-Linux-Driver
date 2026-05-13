@@ -41,7 +41,7 @@ module top_marco2 (
    input HPS_ENET_RX_DV,
    output [3:0] HPS_ENET_TX_DATA,
    output HPS_ENET_TX_EN,
-   input HPS_ENET_INT_N,
+   inout HPS_ENET_INT_N,
    output HPS_FLASH_DCLK,
    output HPS_FLASH_NCSO,
    inout [3:0] HPS_FLASH_DATA,

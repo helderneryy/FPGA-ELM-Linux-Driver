@@ -2,340 +2,183 @@
 Timing Analyzer Summary
 ------------------------------------------------------------
 
-Type  : Slow 1100mV 85C Model Setup 'clk'
-Slack : -9.796
-TNS   : -38499.673
-
-Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : -8.992
-TNS   : -92.504
-
-Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : -7.663
-TNS   : -142.367
-
-Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : -4.907
-TNS   : -33.757
-
-Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : -4.303
-TNS   : -4.303
-
-Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : -3.363
-TNS   : -8.462
-
-Type  : Slow 1100mV 85C Model Setup 'neural_unit:inf_machine|state.ARGMAX'
-Slack : -1.760
-TNS   : -1.760
-
-Type  : Slow 1100mV 85C Model Hold 'clk'
-Slack : 0.220
+Type  : Slow 1100mV 85C Model Setup 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 1.730
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.222
+Type  : Slow 1100mV 85C Model Setup 'altera_reserved_tck'
+Slack : 10.043
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.677
+Type  : Slow 1100mV 85C Model Hold 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.143
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.788
+Type  : Slow 1100mV 85C Model Hold 'altera_reserved_tck'
+Slack : 0.227
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 1.064
+Type  : Slow 1100mV 85C Model Recovery 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 3.375
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 2.733
+Type  : Slow 1100mV 85C Model Recovery 'altera_reserved_tck'
+Slack : 13.628
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 3.006
+Type  : Slow 1100mV 85C Model Removal 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.470
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'clk'
-Slack : -2.636
-TNS   : -33392.191
-
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.216
+Type  : Slow 1100mV 85C Model Removal 'altera_reserved_tck'
+Slack : 0.749
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 0.267
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|pll_write_clk_dq_write_clk'
+Slack : 0.608
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.273
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.623
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 0.285
+Type  : Slow 1100mV 85C Model Minimum Pulse Width 'altera_reserved_tck'
+Slack : 15.699
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.414
+Type  : Slow 1100mV 0C Model Setup 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 1.727
 TNS   : 0.000
 
-Type  : Slow 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 0.435
+Type  : Slow 1100mV 0C Model Setup 'altera_reserved_tck'
+Slack : 10.185
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Setup 'clk'
-Slack : -9.623
-TNS   : -37394.093
-
-Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : -9.221
-TNS   : -93.981
-
-Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : -7.712
-TNS   : -142.593
-
-Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : -5.012
-TNS   : -34.373
-
-Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : -4.376
-TNS   : -4.376
-
-Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : -3.464
-TNS   : -8.703
-
-Type  : Slow 1100mV 0C Model Setup 'neural_unit:inf_machine|state.ARGMAX'
-Slack : -1.748
-TNS   : -1.748
-
-Type  : Slow 1100mV 0C Model Hold 'clk'
-Slack : -0.033
-TNS   : -0.033
-
-Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.153
+Type  : Slow 1100mV 0C Model Hold 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.162
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.572
+Type  : Slow 1100mV 0C Model Hold 'altera_reserved_tck'
+Slack : 0.208
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.789
+Type  : Slow 1100mV 0C Model Recovery 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 3.468
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 0.999
+Type  : Slow 1100mV 0C Model Recovery 'altera_reserved_tck'
+Slack : 13.804
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 2.745
+Type  : Slow 1100mV 0C Model Removal 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.460
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 3.056
+Type  : Slow 1100mV 0C Model Removal 'altera_reserved_tck'
+Slack : 0.727
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'clk'
-Slack : -2.636
-TNS   : -33410.295
-
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.221
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|pll_write_clk_dq_write_clk'
+Slack : 0.613
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 0.264
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.630
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.277
+Type  : Slow 1100mV 0C Model Minimum Pulse Width 'altera_reserved_tck'
+Slack : 15.707
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 0.304
+Type  : Fast 1100mV 85C Model Setup 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 2.110
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.391
+Type  : Fast 1100mV 85C Model Setup 'altera_reserved_tck'
+Slack : 12.631
 TNS   : 0.000
 
-Type  : Slow 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 0.415
+Type  : Fast 1100mV 85C Model Hold 'altera_reserved_tck'
+Slack : 0.070
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Setup 'clk'
-Slack : -5.332
-TNS   : -20592.802
-
-Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : -4.735
-TNS   : -47.885
-
-Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : -3.901
-TNS   : -72.104
-
-Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : -2.431
-TNS   : -15.063
-
-Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : -1.908
-TNS   : -1.908
-
-Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : -1.510
-TNS   : -3.928
-
-Type  : Fast 1100mV 85C Model Setup 'neural_unit:inf_machine|state.ARGMAX'
-Slack : -1.062
-TNS   : -1.062
-
-Type  : Fast 1100mV 85C Model Hold 'clk'
-Slack : 0.129
+Type  : Fast 1100mV 85C Model Hold 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.084
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.236
+Type  : Fast 1100mV 85C Model Recovery 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 3.727
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.472
+Type  : Fast 1100mV 85C Model Recovery 'altera_reserved_tck'
+Slack : 14.937
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.524
+Type  : Fast 1100mV 85C Model Removal 'altera_reserved_tck'
+Slack : 0.377
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 1.012
+Type  : Fast 1100mV 85C Model Removal 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.497
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 1.565
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|pll_write_clk_dq_write_clk'
+Slack : 0.883
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 1.686
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.891
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'clk'
-Slack : -2.636
-TNS   : -32743.964
-
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.235
+Type  : Fast 1100mV 85C Model Minimum Pulse Width 'altera_reserved_tck'
+Slack : 15.681
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 0.267
+Type  : Fast 1100mV 0C Model Setup 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 2.110
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.274
+Type  : Fast 1100mV 0C Model Setup 'altera_reserved_tck'
+Slack : 13.099
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 0.362
+Type  : Fast 1100mV 0C Model Hold 'altera_reserved_tck'
+Slack : 0.054
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.412
+Type  : Fast 1100mV 0C Model Hold 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.077
 TNS   : 0.000
 
-Type  : Fast 1100mV 85C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 0.424
+Type  : Fast 1100mV 0C Model Recovery 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 3.825
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Setup 'clk'
-Slack : -4.793
-TNS   : -17627.576
-
-Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : -4.490
-TNS   : -45.392
-
-Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : -3.622
-TNS   : -66.700
-
-Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : -2.364
-TNS   : -14.509
-
-Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : -1.835
-TNS   : -1.835
-
-Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : -1.516
-TNS   : -3.756
-
-Type  : Fast 1100mV 0C Model Setup 'neural_unit:inf_machine|state.ARGMAX'
-Slack : -0.891
-TNS   : -0.891
-
-Type  : Fast 1100mV 0C Model Hold 'clk'
-Slack : 0.119
+Type  : Fast 1100mV 0C Model Recovery 'altera_reserved_tck'
+Slack : 15.170
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.183
+Type  : Fast 1100mV 0C Model Removal 'altera_reserved_tck'
+Slack : 0.333
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.427
+Type  : Fast 1100mV 0C Model Removal 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.473
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.438
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|pll_write_clk_dq_write_clk'
+Slack : 0.887
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 0.865
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'soc_system:u0|soc_system_hps_0:hps_0|soc_system_hps_0_hps_io:hps_io|soc_system_hps_0_hps_io_border:border|hps_sdram:hps_sdram_inst|hps_sdram_pll:pll|afi_clk_write_clk'
+Slack : 0.894
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 1.543
+Type  : Fast 1100mV 0C Model Minimum Pulse Width 'altera_reserved_tck'
+Slack : 15.729
 TNS   : 0.000
 
-Type  : Fast 1100mV 0C Model Hold 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 1.655
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'clk'
-Slack : -2.636
-TNS   : -32754.420
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|state.FIRST_LAYER'
-Slack : 0.269
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|state.ARGMAX'
-Slack : 0.305
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|sd_fms_state.DONE_IT'
-Slack : 0.314
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_REG'
-Slack : 0.375
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.RQ_BETA1'
-Slack : 0.421
-TNS   : 0.000
-
-Type  : Fast 1100mV 0C Model Minimum Pulse Width 'neural_unit:inf_machine|second_layer:sd_layer|fr_fms_state.CALC'
-Slack : 0.442
-TNS   : 0.000
-
+------------------------------------------------------------
+Info: see the "DDR report" for DDR timing results
+------------------------------------------------------------
 ------------------------------------------------------------
