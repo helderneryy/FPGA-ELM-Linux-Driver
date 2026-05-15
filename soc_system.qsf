@@ -988,6 +988,19 @@ set_instance_assignment -name GLOBAL_SIGNAL OFF -to u0|hps_0|hps_io|border|hps_s
 set_instance_assignment -name GLOBAL_SIGNAL OFF -to u0|hps_0|hps_io|border|hps_sdram_inst|p0|umemphy|uread_datapath|reset_n_fifo_wraddress[3] -tag __hps_sdram_p0
 set_instance_assignment -name ENABLE_BENEFICIAL_SKEW_OPTIMIZATION_FOR_NON_GLOBAL_CLOCKS ON -to u0|hps_0|hps_io|border|hps_sdram_inst -tag __hps_sdram_p0
 set_instance_assignment -name PLL_COMPENSATION_MODE DIRECT -to u0|hps_0|hps_io|border|hps_sdram_inst|pll0|fbout -tag __hps_sdram_p0
+set_global_assignment -name VERILOG_FILE coprocessador_files/tanh_pwl_q4_12.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/second_layer.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/reg_bank128.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/reg_bank10.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/neural_unit.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/mac_second_layer.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/mac_first_layer.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/lsu_controller.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/first_layer.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/ELM_on_DE1_SoC.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/display_resultado.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/CoProcessor.v
+set_global_assignment -name VERILOG_FILE coprocessador_files/argmax_iterativo.v
 set_global_assignment -name QIP_FILE ip/altsource_probe/hps_reset.qip
 set_global_assignment -name VERILOG_FILE ip/debounce/debounce.v
 set_global_assignment -name VERILOG_FILE ip/edge_detect/altera_edge_detector.v
@@ -995,17 +1008,4 @@ set_global_assignment -name QIP_FILE soc_system/synthesis/soc_system.qip
 set_global_assignment -name SDC_FILE soc_system_timing.sdc
 set_global_assignment -name VERILOG_FILE ghrd_top.v
 set_global_assignment -name VERILOG_FILE top_marco2.v
-set_global_assignment -name VERILOG_FILE display_resultado.v
-set_global_assignment -name VERILOG_FILE argmax_iterativo.v
-set_global_assignment -name VERILOG_FILE first_layer.v
-set_global_assignment -name VERILOG_FILE neural_unit.v
-set_global_assignment -name VERILOG_FILE second_layer.v
-set_global_assignment -name VERILOG_FILE lsu_controller.v
-set_global_assignment -name VERILOG_FILE mac_first_layer.v
-set_global_assignment -name VERILOG_FILE mac_second_layer.v
-set_global_assignment -name VERILOG_FILE reg_bank10.v
-set_global_assignment -name VERILOG_FILE reg_bank128.v
-set_global_assignment -name VERILOG_FILE tanh_pwl_q4_12.v
-set_global_assignment -name VERILOG_FILE CoProcessor.v
-set_global_assignment -name VERILOG_FILE ELM_on_DE1_SoC.v
 set_instance_assignment -name PARTITION_HIERARCHY root_partition -to | -section_id Top
