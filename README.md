@@ -25,3 +25,21 @@ O driver deve ser implementado em Assembly ARM e atuar como interface entre a ap
 
 ### Aplicação C
 A aplicação em C deve servir como interface entre o usuário e o sistema, sendo responsável por receber o caminho de uma imagem PNG via linha de comando, realizar a leitura e extração dos pixels e acionar o driver para que o processo de classificação seja iniciado. Após obter o resultado, a aplicação deve imprimir o dígito previsto na tela de forma clara ao usuário.
+
+## Co-processador ELM
+Esta seção é dedicada exclusivamente a descrever o funcionamento do co-processador ELM desenvolvido pelo monitor Maike de Oliveira Nascimento no Marco 1, cujo hardware foi utilizado como base para o desenvolvimento desta etapa.
+
+O co-processador é composto por três módulos principais: a Unidade de Controle, a Unidade de Inferência e a Load/Store Unit. Cada um desses módulos possui responsabilidades e barramentos bem definidos.
+
+IMG
+## Unidade de Controle
+A Unidade de Controle é responsável por receber as instruções e sinais de controle externos, realizar a decodificação da instrução e direcionar o processador para um estado de memória ou de inferência. Durante a execução de uma instrução nenhuma outra pode ser executada, sendo necessário aguardar o término da operação atual antes de enviar uma nova.
+
+## Unidade de Inferência
+A Unidade de Inferência abriga os MACs e os bancos de registradores utilizados durante o processo de cálculo. É dividida em seis submódulos: Primeira Camada, responsável pelos cálculos da camada oculta do ELM; Banco de 128 Registradores, que armazena os resultados dos neurônios da camada oculta; Segunda Camada, responsável pelos cálculos da camada de saída; Banco de 10 Registradores, que armazena os resultados dos neurônios da camada de saída; Argmax Iterativo, que busca o registrador de maior valor para determinar o dígito classificado; e a Unidade de Controle de Inferência, que organiza a execução de cada etapa da ELM.
+
+## Load/Store Unit
+A Load/Store Unit gerencia as operações de leitura e escrita de memória, implementando quatro instâncias de memória RAM de duas portas: mem_img, que armazena os 784 pixels da imagem; mem_win, que armazena os 100352 pesos da camada oculta; mem_bias, que armazena os 128 valores de bias; e mem_beta, que armazena os 1280 valores de beta da camada de saída.
+
+## conjunto de instruções
+Em relação ao conjunto de instruções, o co-processador implementa seis instruções de 32 bits: Store Image (opcode 000), Store Weights Addr (001), Store Weights Value (010), Store Bias (011), Store Beta (100) e Start (101). A comunicação com o co-processador é feita através de três barramentos: Data In (32 bits), utilizado para envio das instruções; Signals (3 bits), utilizado para envio de sinais de controle como Enable, Clear Operation e Reset; e Data Out (32 bits), que retorna o resultado da inferência e as flags de Done, Busy e Error.
