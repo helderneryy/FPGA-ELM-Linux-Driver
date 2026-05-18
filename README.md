@@ -43,3 +43,6 @@ A Load/Store Unit gerencia as operações de leitura e escrita de memória, impl
 
 ## conjunto de instruções
 Em relação ao conjunto de instruções, o co-processador implementa seis instruções de 32 bits: Store Image (opcode 000), Store Weights Addr (001), Store Weights Value (010), Store Bias (011), Store Beta (100) e Start (101). A comunicação com o co-processador é feita através de três barramentos: Data In (32 bits), utilizado para envio das instruções; Signals (3 bits), utilizado para envio de sinais de controle como Enable, Clear Operation e Reset; e Data Out (32 bits), que retorna o resultado da inferência e as flags de Done, Busy e Error.
+
+## Fluxo de execução
+O fluxo de execução do co-processador segue uma sequência bem definida: primeiro os dados são carregados nas memórias via instruções de memória (Store Image, Store Weights, Store Bias e Store Beta), em seguida a instrução Start dispara o processo de inferência, que percorre a camada oculta, aplica a função de ativação tanh, processa a camada de saída e por fim executa o argmax para determinar o dígito classificado. O resultado fica disponível no barramento Data Out junto com a flag de Done indicando a conclusão da operação.
