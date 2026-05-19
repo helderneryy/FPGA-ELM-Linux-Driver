@@ -73,4 +73,8 @@ No decorrer das sessões, a equipe decidiu por conta própria elaborar um fluxo 
 
 IMG 
 
+<<<<<<< HEAD
 No desenvolvimento do driver, a equipe optou por implementar diretamente em Assembly ARM, sem passar por uma versão intermediária em C. Para garantir a corretude da implementação, foi utilizado o GDB como ferramenta de depuração, permitindo inspecionar o estado de cada registrador em tempo real a cada etapa da execução. A integração no Quartus foi realizada com base no aprendizado do Lab 2, seguindo o mesmo processo de construção do top level para instanciar o co-processador no projeto base.
+=======
+No desenvolvimento do driver, a equipe optou por implementar diretamente em Assembly ARM, sem passar por uma versão intermediária em C. Para garantir a corretude da implementação, foi utilizado o GDB como ferramenta de depuração, permitindo inspecionar o estado de cada registrador em tempo real a cada etapa da execução. A integração no Quartus foi realizada com base no aprendizado do Lab 2, seguindo o mesmo processo de construção do top level para instanciar o co-processador no projeto base.
+>>>>>>> 859b888e6ceec497119e52e7a1cf573702622a9a
