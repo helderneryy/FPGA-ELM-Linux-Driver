@@ -1,5 +1,5 @@
 # FPGA-ELM-Linux-Driver
-MI - Sistemas Digitais (PBL)
+### MI - Sistemas Digitais (PBL)
 ## Sumário
 
 - [Introdução](#introdução)
@@ -25,7 +25,6 @@ Foram desenvolvidos: a integração do co-processador ao projeto Quartus com map
 Por fim, agradecemos ao monitor Maike de Oliveira Nascimento pela disponibilização do co-processador ELM desenvolvido no Marco 1, cujo trabalho foi essencial para o avanço desta etapa.
 
 ## Requisitos Principais
-
 Esta seção descreve os requisitos que a solução deve atender, tanto os definidos explicitamente pelo enunciado quanto os identificados pela equipe ao longo do desenvolvimento. Para o Marco 2, o desafio central é garantir que o co-processador ELM desenvolvido no Marco 1 seja corretamente integrado ao HPS, controlado via MMIO através de um driver em Assembly ARM, e acessível por uma aplicação em C que permita ao usuário classificar imagens de dígitos numéricos de ponta a ponta.
 
 ### Entrada e Saída
@@ -64,10 +63,14 @@ Em relação ao conjunto de instruções, o co-processador implementa seis instr
 O fluxo de execução do co-processador segue uma sequência bem definida: primeiro os dados são carregados nas memórias via instruções de memória (Store Image, Store Weights, Store Bias e Store Beta), em seguida a instrução Start dispara o processo de inferência, que percorre a camada oculta, aplica a função de ativação tanh, processa a camada de saída e por fim executa o argmax para determinar o dígito classificado. O resultado fica disponível no barramento Data Out junto com a flag de Done indicando a conclusão da operação.
 
 ## Metodologia de Desenvolvimento
-O desenvolvimento da solução foi realizado seguindo a metodologia PBL, em que o projeto foi avançando de forma incremental a cada sessão tutorial. Os roteiros de laboratório disponibilizados ao longo do processo foram fundamentais para guiar a equipe, especialmente o Lab 0, que introduziu o uso da DE1-SoC com SSH e comandos Linux, e o Lab 2, que abordou diretamente a integração entre HPS e FPGA via MMIO, ensinando como adicionar PIOs no Platform Designer e acessar registradores mapeados em memória através do /dev/mem com mmap em C, mecanismo que serviu de base para o desenvolvimento do driver em Assembly ARM.
+O desenvolvimento da solução foi realizado seguindo a metodologia PBL, em que o projeto foi avançando de forma incremental a cada sessão tutorial. Os roteiros de laboratório disponibilizados ao longo do processo foram fundamentais para guiar a equipe nas etapas iniciais do desenvolvimento.
+
+O Lab 0 foi relevante para nivelar o conhecimento da equipe sobre o uso da plataforma DE1-SoC, introduzindo conceitos básicos de SSH, comandos Linux e programação em C, que serviram de base para o trabalho com o HPS ao longo do projeto.
+
+O Lab 2 foi o mais diretamente aplicável ao desenvolvimento do Marco 2. Por meio dele, a equipe compreendeu como funciona a integração entre o HPS e a FPGA, especialmente como abrir o projeto base no Quartus, visualizar o HPS e instanciar um módulo no top level do projeto, processo essencial para integrar o co-processador do Maike ao sistema. Essa compreensão orientou diretamente as decisões tomadas na etapa de integração HPS-FPGA.
 
 No decorrer das sessões, a equipe decidiu por conta própria elaborar um fluxo de informações inicial, que serviu como base conceitual para o entendimento do sistema, sem ainda definir as instruções de forma concreta. Paralelamente, foram realizadas pesquisas sobre temas como polling, MMIO, como estruturar uma API em Assembly e outros conceitos relacionados, que trouxeram mudanças significativas na compreensão teórica da equipe e orientaram as decisões de implementação ao longo do desenvolvimento.
 
 IMG 
 
-
+No desenvolvimento do driver, a equipe optou por implementar diretamente em Assembly ARM, sem passar por uma versão intermediária em C. Para garantir a corretude da implementação, foi utilizado o GDB como ferramenta de depuração, permitindo inspecionar o estado de cada registrador em tempo real a cada etapa da execução. A integração no Quartus foi realizada com base no aprendizado do Lab 2, seguindo o mesmo processo de construção do top level para instanciar o co-processador no projeto base.
