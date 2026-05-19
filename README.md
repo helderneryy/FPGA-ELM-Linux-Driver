@@ -32,17 +32,26 @@ Esta seção é dedicada exclusivamente a descrever o funcionamento do co-proces
 O co-processador é composto por três módulos principais: a Unidade de Controle, a Unidade de Inferência e a Load/Store Unit. Cada um desses módulos possui responsabilidades e barramentos bem definidos.
 
 IMG
-## Unidade de Controle
+### Unidade de Controle
 A Unidade de Controle é responsável por receber as instruções e sinais de controle externos, realizar a decodificação da instrução e direcionar o processador para um estado de memória ou de inferência. Durante a execução de uma instrução nenhuma outra pode ser executada, sendo necessário aguardar o término da operação atual antes de enviar uma nova.
 
-## Unidade de Inferência
+### Unidade de Inferência
 A Unidade de Inferência abriga os MACs e os bancos de registradores utilizados durante o processo de cálculo. É dividida em seis submódulos: Primeira Camada, responsável pelos cálculos da camada oculta do ELM; Banco de 128 Registradores, que armazena os resultados dos neurônios da camada oculta; Segunda Camada, responsável pelos cálculos da camada de saída; Banco de 10 Registradores, que armazena os resultados dos neurônios da camada de saída; Argmax Iterativo, que busca o registrador de maior valor para determinar o dígito classificado; e a Unidade de Controle de Inferência, que organiza a execução de cada etapa da ELM.
 
-## Load/Store Unit
+### Load/Store Unit
 A Load/Store Unit gerencia as operações de leitura e escrita de memória, implementando quatro instâncias de memória RAM de duas portas: mem_img, que armazena os 784 pixels da imagem; mem_win, que armazena os 100352 pesos da camada oculta; mem_bias, que armazena os 128 valores de bias; e mem_beta, que armazena os 1280 valores de beta da camada de saída.
 
-## conjunto de instruções
+### conjunto de instruções
 Em relação ao conjunto de instruções, o co-processador implementa seis instruções de 32 bits: Store Image (opcode 000), Store Weights Addr (001), Store Weights Value (010), Store Bias (011), Store Beta (100) e Start (101). A comunicação com o co-processador é feita através de três barramentos: Data In (32 bits), utilizado para envio das instruções; Signals (3 bits), utilizado para envio de sinais de controle como Enable, Clear Operation e Reset; e Data Out (32 bits), que retorna o resultado da inferência e as flags de Done, Busy e Error.
 
-## Fluxo de execução
+### Fluxo de execução
 O fluxo de execução do co-processador segue uma sequência bem definida: primeiro os dados são carregados nas memórias via instruções de memória (Store Image, Store Weights, Store Bias e Store Beta), em seguida a instrução Start dispara o processo de inferência, que percorre a camada oculta, aplica a função de ativação tanh, processa a camada de saída e por fim executa o argmax para determinar o dígito classificado. O resultado fica disponível no barramento Data Out junto com a flag de Done indicando a conclusão da operação.
+
+## Metodologia de Desenvolvimento
+O desenvolvimento da solução foi realizado seguindo a metodologia PBL, em que o projeto foi avançando de forma incremental a cada sessão tutorial. Os roteiros de laboratório disponibilizados ao longo do processo foram fundamentais para guiar a equipe, especialmente o Lab 0, que introduziu o uso da DE1-SoC com SSH e comandos Linux, e o Lab 2, que abordou diretamente a integração entre HPS e FPGA via MMIO, ensinando como adicionar PIOs no Platform Designer e acessar registradores mapeados em memória através do /dev/mem com mmap em C, mecanismo que serviu de base para o desenvolvimento do driver em Assembly ARM.
+
+No decorrer das sessões, a equipe decidiu por conta própria elaborar um fluxo de informações inicial, que serviu como base conceitual para o entendimento do sistema, sem ainda definir as instruções de forma concreta. Paralelamente, foram realizadas pesquisas sobre temas como polling, MMIO, como estruturar uma API em Assembly e outros conceitos relacionados, que trouxeram mudanças significativas na compreensão teórica da equipe e orientaram as decisões de implementação ao longo do desenvolvimento.
+
+IMG 
+
+
