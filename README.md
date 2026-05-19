@@ -1,5 +1,21 @@
 # FPGA-ELM-Linux-Driver
 MI - Sistemas Digitais (PBL)
+## Sumário
+
+- [Introdução](#introdução)
+- [Requisitos Principais](#requisitos-principais)
+  - [Entrada e Saída](#entrada-e-saída)
+  - [Driver](#driver)
+  - [Aplicação C](#aplicação-c)
+- [Co-processador ELM](#co-processador-elm)
+  - [Unidade de Controle](#unidade-de-controle)
+  - [Unidade de Inferência](#unidade-de-inferência)
+  - [Load/Store Unit](#loadstore-unit)
+  - [Conjunto de Instruções](#conjunto-de-instruções)
+  - [Fluxo de Execução](#fluxo-de-execução)
+- [Metodologia de Desenvolvimento](#metodologia-de-desenvolvimento)
+
+
 ## Introdução
 Este relatório descreve o desenvolvimento do Marco 2 de um sistema embarcado voltado para a classificação de imagens de dígitos numéricos (TEC499 — UEFS, 2026.1), com foco na integração entre o HPS e a FPGA da plataforma DE1-SoC e no desenvolvimento do driver Linux em Assembly ARM responsável por controlar o co-processador ELM via MMIO.
 
