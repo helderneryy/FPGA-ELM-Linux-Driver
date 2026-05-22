@@ -229,11 +229,6 @@ wire [31:0] pio_data_in_wire;
 wire [2:0] pio_signals_wire;
 wire [31:0] pio_data_out_wire;
 
-assign LEDR[0] = pio_data_out_wire[4]; // done
-assign LEDR[1] = pio_signals_wire[0];  // enable
-assign LEDR[2] = pio_data_out_wire[5]; // busy
-assign LEDR[3] = pio_data_out_wire[6]; // error
-
 // connection of internal logics
 assign stm_hw_events    = {{3{1'b0}},SW, fpga_led_internal, fpga_debounced_buttons};
 

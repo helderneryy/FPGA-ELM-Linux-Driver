@@ -24,6 +24,31 @@ O problema proposto consiste em construir um classificador capaz de receber uma 
 Foram desenvolvidos: a integração do co-processador ao projeto Quartus com mapeamento via ponte Lightweight HPS-to-FPGA, um driver Linux em Assembly ARM para controle do hardware via MMIO, e uma aplicação em C capaz de receber uma imagem PNG, acionar o driver e imprimir o dígito classificado. O relatório detalha cada uma dessas etapas, incluindo a arquitetura da solução, os testes realizados e os resultados obtidos.
 Por fim, agradecemos ao monitor Maike de Oliveira Nascimento pela disponibilização do co-processador ELM desenvolvido no Marco 1, cujo trabalho foi essencial para o avanço desta etapa.
 
+## Fundamentação Teórica
+Esta seção apresenta os principais conceitos teóricos que embasam o desenvolvimento do Marco 2. Os tópicos foram selecionados por serem diretamente aplicados na implementação do driver em Assembly ARM e na integração entre o HPS e a FPGA, sendo essenciais para compreender as decisões de projeto adotadas pela equipe ao longo do desenvolvimento.
+
+### FPGA e HPS 
+A plataforma DE1-SoC é baseada em um SoC (System on Chip) da Intel que combina dois elementos principais em um único chip: um processador ARM Cortex-A9 de dois núcleos, chamado de HPS (Hard Processor System), e uma FPGA (Field Programmable Gate Array) da família Cyclone V.
+
+O HPS é responsável por executar o sistema operacional Linux e as aplicações de software, enquanto a FPGA é utilizada para implementar circuitos digitais customizados em hardware, como o co-processador ELM desenvolvido no Marco 1. Essa combinação permite que tarefas computacionalmente intensivas sejam aceleradas em hardware, enquanto o controle e a interface com o usuário ficam a cargo do processador.
+
+A comunicação entre o HPS e a FPGA é feita através de pontes dedicadas. No caso deste projeto, foi utilizada a ponte Lightweight HPS-to-FPGA, que permite ao processador acessar registradores e módulos implementados na FPGA como se fossem posições de memória, por meio do mecanismo de MMIO.
+
+### MMIO
+MMIO (Memory-Mapped I/O) é uma técnica que permite ao processador se comunicar com dispositivos de hardware acessando endereços de memória específicos. Em vez de utilizar instruções dedicadas de I/O, o processador simplesmente lê e escreve nesses endereços como se fossem posições normais de memória RAM, e o hardware responde a essas operações.
+
+Na DE1-SoC, os registradores do co-processador implementado na FPGA são mapeados em endereços físicos acessíveis pelo HPS através da ponte Lightweight HPS-to-FPGA, a partir do endereço base 0xFF200000. Para acessar esses endereços a partir de um programa rodando no Linux, é necessário abrir o arquivo especial /dev/mem e utilizar a syscall mmap para mapear a região física para um endereço virtual acessível pelo processo, mecanismo que foi utilizado diretamente no driver desenvolvido pela equipe.
+
+### Assembly ARM
+Assembly ARM é a linguagem de programação de baixo nível que permite escrever instruções diretamente executáveis pelo processador ARM. Diferente de linguagens de alto nível, o Assembly oferece controle total sobre os registradores e a memória do processador, sendo frequentemente utilizado em situações onde desempenho e acesso direto ao hardware são necessários, como na implementação de drivers.
+
+O processador ARM organiza seu estado interno em registradores de uso geral, sendo os principais r0 a r12, além do SP (stack pointer), LR (link register) e PC (program counter). A convenção de chamada AAPCS define regras para passagem de argumentos, retorno de valores e preservação de registradores entre funções, permitindo que código Assembly e código C coexistam no mesmo projeto. A comunicação com o sistema operacional é feita através de syscalls, instruções especiais que solicitam serviços ao kernel como abertura de arquivos e mapeamento de memória.
+
+### Driver Linux
+Um driver Linux é um componente de software responsável por fazer a interface entre o sistema operacional e um dispositivo de hardware. Ele abstrai os detalhes de baixo nível do hardware, expondo uma API que permite às aplicações interagir com o dispositivo de forma padronizada, sem precisar conhecer os detalhes internos de seu funcionamento.
+
+No contexto deste projeto, o driver atua como intermediário entre a aplicação em C e o co-processador ELM implementado na FPGA, sendo responsável por inicializar o hardware, transferir os dados necessários para a inferência e retornar o resultado da classificação para a aplicação.
+
 ## Requisitos Principais
 Esta seção descreve os requisitos que a solução deve atender, tanto os definidos explicitamente pelo enunciado quanto os identificados pela equipe ao longo do desenvolvimento. Para o Marco 2, o desafio central é garantir que o co-processador ELM desenvolvido no Marco 1 seja corretamente integrado ao HPS, controlado via MMIO através de um driver em Assembly ARM, e acessível por uma aplicação em C que permita ao usuário classificar imagens de dígitos numéricos de ponta a ponta.
 
@@ -63,9 +88,11 @@ Em relação ao conjunto de instruções, o co-processador implementa seis instr
 O fluxo de execução do co-processador segue uma sequência bem definida: primeiro os dados são carregados nas memórias via instruções de memória (Store Image, Store Weights, Store Bias e Store Beta), em seguida a instrução Start dispara o processo de inferência, que percorre a camada oculta, aplica a função de ativação tanh, processa a camada de saída e por fim executa o argmax para determinar o dígito classificado. O resultado fica disponível no barramento Data Out junto com a flag de Done indicando a conclusão da operação.
 
 ## Metodologia de Desenvolvimento
-O desenvolvimento da solução foi realizado seguindo a metodologia PBL, em que o projeto foi avançando de forma incremental a cada sessão tutorial. Os roteiros de laboratório disponibilizados ao longo do processo foram fundamentais para guiar a equipe nas etapas iniciais do desenvolvimento.
+Este projeto foi desenvolvido por meio da metodologia PBL (Problem Based Learning), em que o aprendizado é conduzido a partir de um problema real proposto pelo professor. As atividades são organizadas em sessões tutoriais, onde o grupo assume cargos definidos e cumpre metas estabelecidas para aquela etapa, e sessões de desenvolvimento, onde a equipe trabalha na implementação da solução. Dentro dessa metodologia, os roteiros de laboratório são materiais produzidos pelos professores com o objetivo de auxiliar o grupo na compreensão de etapas específicas do desenvolvimento, guiando o estudante passo a passo por conceitos e ferramentas relevantes para o projeto.
 
-O Lab 0 foi relevante para nivelar o conhecimento da equipe sobre o uso da plataforma DE1-SoC, introduzindo conceitos básicos de SSH, comandos Linux e programação em C, que serviram de base para o trabalho com o HPS ao longo do projeto.
+Os roteiros disponibilizados ao longo do processo foram fundamentais para guiar a equipe nas etapas iniciais do desenvolvimento, avançando de forma incremental a cada sessão tutorial.
+
+O Lab 0 foi relevante para familiarizar a equipe com o ambiente de desenvolvimento, auxiliando nos primeiros contatos com o uso do terminal, a conexão com a placa DE1-SoC e aspectos básicos do fluxo de trabalho que seriam utilizados ao longo do projeto.
 
 O Lab 2 foi o mais diretamente aplicável ao desenvolvimento do Marco 2. Por meio dele, a equipe compreendeu como funciona a integração entre o HPS e a FPGA, especialmente como abrir o projeto base no Quartus, visualizar o HPS e instanciar um módulo no top level do projeto, processo essencial para integrar o co-processador do Maike ao sistema. Essa compreensão orientou diretamente as decisões tomadas na etapa de integração HPS-FPGA.
 
@@ -73,8 +100,4 @@ No decorrer das sessões, a equipe decidiu por conta própria elaborar um fluxo 
 
 IMG 
 
-<<<<<<< HEAD
 No desenvolvimento do driver, a equipe optou por implementar diretamente em Assembly ARM, sem passar por uma versão intermediária em C. Para garantir a corretude da implementação, foi utilizado o GDB como ferramenta de depuração, permitindo inspecionar o estado de cada registrador em tempo real a cada etapa da execução. A integração no Quartus foi realizada com base no aprendizado do Lab 2, seguindo o mesmo processo de construção do top level para instanciar o co-processador no projeto base.
-=======
-No desenvolvimento do driver, a equipe optou por implementar diretamente em Assembly ARM, sem passar por uma versão intermediária em C. Para garantir a corretude da implementação, foi utilizado o GDB como ferramenta de depuração, permitindo inspecionar o estado de cada registrador em tempo real a cada etapa da execução. A integração no Quartus foi realizada com base no aprendizado do Lab 2, seguindo o mesmo processo de construção do top level para instanciar o co-processador no projeto base.
->>>>>>> 859b888e6ceec497119e52e7a1cf573702622a9a
