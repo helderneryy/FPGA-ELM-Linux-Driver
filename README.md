@@ -151,3 +151,11 @@ O desenvolvimento do Marco 2 foi concluído com sucesso, atingindo todos os obje
 A validação do sistema foi realizada com 100 imagens, 10 de cada dígito, atingindo uma acurácia de 83%. O resultado demonstra que a solução desenvolvida é funcional e estável, cumprindo o requisito de classificar imagens repetidamente sem falhas de comunicação entre o HPS e a FPGA.
 
 O projeto contribuiu significativamente para o aprendizado da equipe em áreas como programação em Assembly ARM, MMIO, integração HPS-FPGA e desenvolvimento de drivers Linux, consolidando na prática os conceitos trabalhados ao longo da disciplina por meio da metodologia PBL.
+
+## Referências
+DEV TECH. Tutorial Makefile em C. YouTube, 2020. Disponível em: https://youtu.be/U6IfLZOh6Sc
+MATOS, Kamilly. Coprocessador de Imagens PBL SD. GitHub, 2025. Disponível em: https://github.com/kamillymatos/coprocessador-de-imagens-pbl-sd-2
+Um guia completo para o desenvolvimento de API. AppMaster. Disponível em: https://appmaster.io/pt/blog/um-guia-completo-para-o-desenvolvimento-da-api
+GANEKO, Yudi. O que é API (em 2 minutos). YouTube, 2025. Disponível em: https://youtu.be/Q-lyQ7BdDXE
+NASCIMENTO, Maike. Problema SD 2026.1. GitHub, 2026. Disponível em: https://github.com/DestinyWolf/Problema_SD_2026_1
+The Linux man-pages project. mmap — map files or devices into memory. Disponível em: https://man7.org/linux/man-pages/man2/mmap.2.html
