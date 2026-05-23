@@ -47,7 +47,12 @@ A plataforma DE1-SoC é baseada em um SoC (System on Chip) da Intel que combina 
 
 O HPS é responsável por executar o sistema operacional Linux e as aplicações de software, enquanto a FPGA é utilizada para implementar circuitos digitais customizados em hardware, como o co-processador ELM desenvolvido no Marco 1. Essa combinação permite que tarefas computacionalmente intensivas sejam aceleradas em hardware, enquanto o controle e a interface com o usuário ficam a cargo do processador.
 
-A comunicação entre o HPS e a FPGA é feita através de pontes dedicadas. No caso deste projeto, foi utilizada a ponte Lightweight HPS-to-FPGA, que permite ao processador acessar registradores e módulos implementados na FPGA como se fossem posições de memória, por meio do mecanismo de MMIO.
+A comunicação entre o HPS e a FPGA é feita através de pontes dedicadas. No caso deste projeto, foi utilizada a ponte Lightweight HPS-to-FPGA, que permite ao processador acessar registradores e módulos implementados na FPGA como se fossem posições de memória, por meio do mecanismo de MMIO. A Figura 2 apresenta a organização interna da plataforma DE1-SoC, destacando a comunicação entre o HPS e o co-processador ELM implementado na FPGA através dos barramentos Data_in, Signals e Data_out.
+
+![SoC DE1-SoC](diagrama_SoC_drawio.png)
+
+
+*Figura 2: Organização interna da plataforma DE1-SoC*
 
 ### MMIO
 MMIO (Memory-Mapped I/O) é uma técnica que permite ao processador se comunicar com dispositivos de hardware acessando endereços de memória específicos. Em vez de utilizar instruções dedicadas de I/O, o processador simplesmente lê e escreve nesses endereços como se fossem posições normais de memória RAM, e o hardware responde a essas operações.
@@ -118,6 +123,8 @@ No desenvolvimento do driver, a equipe optou por implementar diretamente em Asse
 A solução desenvolvida é composta por três camadas que trabalham em conjunto: o driver em Assembly ARM, a aplicação em C e o header de integração entre os dois. O driver é responsável por toda a comunicação de baixo nível com o co-processador via MMIO, expondo uma API que a aplicação C utiliza para orquestrar o fluxo completo de classificação. A comunicação entre as camadas é feita através do arquivo funcoes.h, que declara os protótipos das funções Assembly para o compilador C, permitindo a link-edição dos dois módulos em um único executável. A Figura 1 ilustra a arquitetura da solução desenvolvida, apresentando as três camadas do sistema e os mecanismos de comunicação entre elas.
 
 ![Arquitetura da Solução](Diagrama%20Arquitetura%20da%20Solução.drawio.png)
+
+
 *Figura 1: Arquitetura da Solução*
 
 ### Driver Assembly (funcoes.s)
