@@ -133,7 +133,11 @@ O driver foi implementado inteiramente em Assembly ARM e organiza suas funções
 A função iniciar abre o arquivo /dev/mem via syscall open e mapeia a região física da ponte Lightweight HPS-to-FPGA para um endereço virtual acessível pelo processo, utilizando a syscall mmap2. O endereço virtual retornado é salvo em FPGA_BASE e utilizado por todas as demais funções. Ao final, fechar desfaz esse mapeamento via munmap e fecha o file descriptor.
 As funções resetar e limpar enviam pulsos nos bits 2 e 1 do pio_signals, respectivamente, garantindo que o co-processador esteja em estado IDLE antes de cada inferência.
 As funções de envio de dados (send_image, send_weights, send_bias, send_beta) montam as instruções seguindo o formato da ISA do co-processador, posicionando o opcode nos bits [2:0], o endereço e o dado nos campos correspondentes via deslocamentos e operações de OR, e então escrevem a instrução no pio_data_in seguida de um pulso de enable. Os pesos são enviados em dois ciclos por valor: primeiro a instrução de endereço (opcode 001) e em seguida a instrução de valor (opcode 010). Os valores de bias e beta são representados em ponto fixo Q4.12 e passam por rev16 para correção de endianness antes do envio.
-A função send_start envia apenas o opcode 101 ao co-processador, disparando o início da inferência. Em seguida, polling fica em loop lendo o pio_data_out até que o bit 4 (Done) seja 1, indicando que o co-processador concluiu. Por fim, ler_resultado isola os bits [3:0] do pio_data_out, que contêm o dígito predito entre 0 e 9.
+A função send_start envia apenas o opcode 101 ao co-processador, disparando o início da inferência. Em seguida, polling fica em loop lendo o pio_data_out até que o bit 4 (Done) seja 1, indicando que o co-processador concluiu. Por fim, ler_resultado isola os bits [3:0] do pio_data_out, que contêm o dígito predito entre 0 e 9. A Figura 3 apresenta o fluxo de execução do driver, descrevendo a sequência de passos realizados desde a abertura do /dev/mem até a leitura do dígito predito.
+
+![Fluxo do Driver](fluxo%20de%20execução%20do%20driver.drawio.png)
+
+*Figura 3: Fluxo de execução do driver*
 
 ### Aplicação C (main.c)
 
