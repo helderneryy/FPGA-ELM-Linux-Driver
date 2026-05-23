@@ -101,3 +101,24 @@ No decorrer das sessões, a equipe decidiu por conta própria elaborar um fluxo 
 IMG 
 
 No desenvolvimento do driver, a equipe optou por implementar diretamente em Assembly ARM, sem passar por uma versão intermediária em C. Para garantir a corretude da implementação, foi utilizado o GDB como ferramenta de depuração, permitindo inspecionar o estado de cada registrador em tempo real a cada etapa da execução. A integração no Quartus foi realizada com base no aprendizado do Lab 2, seguindo o mesmo processo de construção do top level para instanciar o co-processador no projeto base.
+
+## Descrição da Solução
+A solução desenvolvida é composta por três camadas que trabalham em conjunto: o driver em Assembly ARM, a aplicação em C e o header de integração entre os dois. O driver é responsável por toda a comunicação de baixo nível com o co-processador via MMIO, expondo uma API que a aplicação C utiliza para orquestrar o fluxo completo de classificação. A comunicação entre as camadas é feita através do arquivo funcoes.h, que declara os protótipos das funções Assembly para o compilador C, permitindo a link-edição dos dois módulos em um único executável.
+
+### Driver Assembly (funcoes.s)
+
+O driver foi implementado inteiramente em Assembly ARM e organiza suas funções em torno de três PIOs mapeados a partir do endereço base 0xFF200000: pio_data_out (offset 0x00), utilizado para leitura do resultado e flags; pio_signals (offset 0x10), utilizado para envio de sinais de controle como enable, reset e clear; e pio_data_in (offset 0x20), utilizado para envio das instruções ao co-processador.
+A função iniciar abre o arquivo /dev/mem via syscall open e mapeia a região física da ponte Lightweight HPS-to-FPGA para um endereço virtual acessível pelo processo, utilizando a syscall mmap2. O endereço virtual retornado é salvo em FPGA_BASE e utilizado por todas as demais funções. Ao final, fechar desfaz esse mapeamento via munmap e fecha o file descriptor.
+As funções resetar e limpar enviam pulsos nos bits 2 e 1 do pio_signals, respectivamente, garantindo que o co-processador esteja em estado IDLE antes de cada inferência.
+As funções de envio de dados (send_image, send_weights, send_bias, send_beta) montam as instruções seguindo o formato da ISA do co-processador, posicionando o opcode nos bits [2:0], o endereço e o dado nos campos correspondentes via deslocamentos e operações de OR, e então escrevem a instrução no pio_data_in seguida de um pulso de enable. Os pesos são enviados em dois ciclos por valor: primeiro a instrução de endereço (opcode 001) e em seguida a instrução de valor (opcode 010). Os valores de bias e beta são representados em ponto fixo Q4.12 e passam por rev16 para correção de endianness antes do envio.
+A função send_start envia apenas o opcode 101 ao co-processador, disparando o início da inferência. Em seguida, polling fica em loop lendo o pio_data_out até que o bit 4 (Done) seja 1, indicando que o co-processador concluiu. Por fim, ler_resultado isola os bits [3:0] do pio_data_out, que contêm o dígito predito entre 0 e 9.
+
+### Aplicação C (main.c)
+
+A aplicação em C atua como interface entre o usuário e o driver, oferecendo um menu interativo com 13 opções que permitem executar cada etapa do fluxo individualmente ou de forma automática através da opção de inferência completa.
+A função inferencia_completa encapsula todo o fluxo em sequência: inicializa o hardware caso ainda não tenha sido feito, aplica reset e clear, carrega e envia a imagem, os pesos, o bias e o beta, dispara a inferência via send_start, aguarda o resultado via polling e imprime o dígito predito na tela. O carregamento dos arquivos binários é feito pela função auxiliar carregar_arquivo, que abre o arquivo, lê exatamente o número de bytes esperado e fecha o arquivo, retornando erro caso a leitura seja incompleta.
+A aplicação controla o estado do sistema através de flags internas (hardware_init, img_carregada, pesos_carregados, bias_carregado, beta_carregado), evitando operações indevidas como enviar dados sem o hardware inicializado.
+
+### Integração C e Assembly
+
+A integração entre a aplicação C e o driver Assembly é feita através do arquivo funcoes.h, que declara os protótipos de todas as funções exportadas pelo driver. O arquivo Assembly exporta cada função com .global e .type, tornando os símbolos visíveis ao linker. A compilação é feita separadamente com gcc -marm -c, gerando os arquivos objeto main.o e funcoes.o, que são então linkados em um único executável pelo comando gcc -marm main.o funcoes.o -o exe. A convenção de chamada AAPCS é respeitada em todas as funções do driver, garantindo compatibilidade com o código C.
