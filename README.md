@@ -86,7 +86,6 @@ Esta seção é dedicada exclusivamente a descrever o funcionamento do co-proces
 
 O co-processador é composto por três módulos principais: a Unidade de Controle, a Unidade de Inferência e a Load/Store Unit. Cada um desses módulos possui responsabilidades e barramentos bem definidos.
 
-IMG
 ### Unidade de Controle
 A Unidade de Controle é responsável por receber as instruções e sinais de controle externos, realizar a decodificação da instrução e direcionar o processador para um estado de memória ou de inferência. Durante a execução de uma instrução nenhuma outra pode ser executada, sendo necessário aguardar o término da operação atual antes de enviar uma nova.
 
@@ -113,12 +112,13 @@ O Lab 2 foi o mais diretamente aplicável ao desenvolvimento do Marco 2. Por mei
 
 No decorrer das sessões, a equipe decidiu por conta própria elaborar um fluxo de informações inicial, que serviu como base conceitual para o entendimento do sistema, sem ainda definir as instruções de forma concreta. Paralelamente, foram realizadas pesquisas sobre temas como polling, MMIO, como estruturar uma API em Assembly e outros conceitos relacionados, que trouxeram mudanças significativas na compreensão teórica da equipe e orientaram as decisões de implementação ao longo do desenvolvimento.
 
-IMG 
-
 No desenvolvimento do driver, a equipe optou por implementar diretamente em Assembly ARM, sem passar por uma versão intermediária em C. Para garantir a corretude da implementação, foi utilizado o GDB como ferramenta de depuração, permitindo inspecionar o estado de cada registrador em tempo real a cada etapa da execução. A integração no Quartus foi realizada com base no aprendizado do Lab 2, seguindo o mesmo processo de construção do top level para instanciar o co-processador no projeto base.
 
 ## Descrição da Solução
-A solução desenvolvida é composta por três camadas que trabalham em conjunto: o driver em Assembly ARM, a aplicação em C e o header de integração entre os dois. O driver é responsável por toda a comunicação de baixo nível com o co-processador via MMIO, expondo uma API que a aplicação C utiliza para orquestrar o fluxo completo de classificação. A comunicação entre as camadas é feita através do arquivo funcoes.h, que declara os protótipos das funções Assembly para o compilador C, permitindo a link-edição dos dois módulos em um único executável.
+A solução desenvolvida é composta por três camadas que trabalham em conjunto: o driver em Assembly ARM, a aplicação em C e o header de integração entre os dois. O driver é responsável por toda a comunicação de baixo nível com o co-processador via MMIO, expondo uma API que a aplicação C utiliza para orquestrar o fluxo completo de classificação. A comunicação entre as camadas é feita através do arquivo funcoes.h, que declara os protótipos das funções Assembly para o compilador C, permitindo a link-edição dos dois módulos em um único executável. A Figura 1 ilustra a arquitetura da solução desenvolvida, apresentando as três camadas do sistema e os mecanismos de comunicação entre elas.
+
+![Arquitetura da Solução](Diagrama%20Arquitetura%20da%20Solução.drawio.png)
+*Figura 1: Arquitetura da Solução*
 
 ### Driver Assembly (funcoes.s)
 
@@ -137,11 +137,6 @@ A aplicação controla o estado do sistema através de flags internas (hardware_
 ### Integração C e Assembly
 
 A integração entre a aplicação C e o driver Assembly é feita através do arquivo funcoes.h, que declara os protótipos de todas as funções exportadas pelo driver. O arquivo Assembly exporta cada função com .global e .type, tornando os símbolos visíveis ao linker. A compilação é feita separadamente com gcc -marm -c, gerando os arquivos objeto main.o e funcoes.o, que são então linkados em um único executável pelo comando gcc -marm main.o funcoes.o -o exe. A convenção de chamada AAPCS é respeitada em todas as funções do driver, garantindo compatibilidade com o código C.
-
-
-
-
-
 
 ## Testes e Validação
 Esta seção descreve o processo de testes realizado pela equipe para validar o funcionamento do sistema, abrangendo tanto a depuração do driver em Assembly durante o desenvolvimento quanto a validação final por meio de um conjunto de imagens de dígitos numéricos.
