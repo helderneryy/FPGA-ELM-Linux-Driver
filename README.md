@@ -49,10 +49,10 @@ O HPS é responsável por executar o sistema operacional Linux e as aplicações
 
 A comunicação entre o HPS e a FPGA é feita através de pontes dedicadas. No caso deste projeto, foi utilizada a ponte Lightweight HPS-to-FPGA, que permite ao processador acessar registradores e módulos implementados na FPGA como se fossem posições de memória, por meio do mecanismo de MMIO. A Figura 2 apresenta a organização interna da plataforma DE1-SoC, destacando a comunicação entre o HPS e o co-processador ELM implementado na FPGA através dos barramentos Data_in, Signals e Data_out.
 
-![SoC DE1-SoC](diagrama_SoC_drawio.png)
-
+![SoC DE1-SoC](diagrama_SoC.png)
 
 *Figura 2: Organização interna da plataforma DE1-SoC*
+
 
 ### MMIO
 MMIO (Memory-Mapped I/O) é uma técnica que permite ao processador se comunicar com dispositivos de hardware acessando endereços de memória específicos. Em vez de utilizar instruções dedicadas de I/O, o processador simplesmente lê e escreve nesses endereços como se fossem posições normais de memória RAM, e o hardware responde a essas operações.
