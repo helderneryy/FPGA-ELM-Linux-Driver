@@ -122,3 +122,25 @@ A aplicação controla o estado do sistema através de flags internas (hardware_
 ### Integração C e Assembly
 
 A integração entre a aplicação C e o driver Assembly é feita através do arquivo funcoes.h, que declara os protótipos de todas as funções exportadas pelo driver. O arquivo Assembly exporta cada função com .global e .type, tornando os símbolos visíveis ao linker. A compilação é feita separadamente com gcc -marm -c, gerando os arquivos objeto main.o e funcoes.o, que são então linkados em um único executável pelo comando gcc -marm main.o funcoes.o -o exe. A convenção de chamada AAPCS é respeitada em todas as funções do driver, garantindo compatibilidade com o código C.
+
+
+
+
+
+
+## Testes e Validação
+Esta seção descreve o processo de testes realizado pela equipe para validar o funcionamento do sistema, abrangendo tanto a depuração do driver em Assembly durante o desenvolvimento quanto a validação final por meio de um conjunto de imagens de dígitos numéricos.
+
+### Metodologia de Testes
+
+Os testes foram realizados por meio de um script batch (teste_batch.sh), executado via make test. O script compila o projeto automaticamente, percorre um diretório com 100 imagens organizadas em subpastas por dígito, sendo 10 imagens de cada dígito de 0 a 9, executa o classificador para cada imagem e gera um relatório final em resultados.txt com o resultado de cada classificação e a acurácia geral do sistema.
+
+O fluxo do script consiste em montar uma sequência de inputs simulando a interação com o menu da aplicação, executar o programa uma única vez com todos os inputs via redirecionamento, extrair as predições da saída e comparar com os valores esperados.
+
+### Depuração com GDB
+
+Durante o desenvolvimento do driver, o GDB foi utilizado como ferramenta de depuração para validar o comportamento do código Assembly em tempo de execução. Como o driver é implementado diretamente em Assembly ARM, qualquer erro em um registrador pode quebrar o fluxo silenciosamente, sem mensagens de erro visíveis. O GDB permitiu que a equipe inspecionasse o estado dos registradores a cada etapa, verificando se o valor montado da instrução estava correto antes de ser enviado ao co-processador via pio_data_in, se o mmap retornou um endereço virtual válido para a ponte LW, e se o polling estava testando o bit correto do pio_data_out para detectar o sinal de Done.
+
+### Resultados
+
+O sistema classificou corretamente 83 das 100 imagens testadas, atingindo uma acurácia de 83%. O relatório gerado pelo script detalha os acertos e erros por dígito, permitindo identificar quais classes apresentaram maior dificuldade de classificação. O resultado demonstra que a comunicação entre o HPS e o co-processador ELM foi estabelecida com sucesso e que o fluxo completo de inferência, desde o envio da imagem até a leitura do dígito predito, funcionou de forma estável ao longo de todos os testes realizados.
