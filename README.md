@@ -3,6 +3,11 @@
 ## Sumário
 
 - [Introdução](#introdução)
+- [Fundamentação Teórica](#fundamentação-teórica)
+  - [FPGA e HPS](#fpga-e-hps)
+  - [MMIO](#mmio)
+  - [Assembly ARM](#assembly-arm)
+  - [Driver Linux](#driver-linux)
 - [Requisitos Principais](#requisitos-principais)
   - [Entrada e Saída](#entrada-e-saída)
   - [Driver](#driver)
@@ -14,7 +19,16 @@
   - [Conjunto de Instruções](#conjunto-de-instruções)
   - [Fluxo de Execução](#fluxo-de-execução)
 - [Metodologia de Desenvolvimento](#metodologia-de-desenvolvimento)
-
+- [Descrição da Solução](#descrição-da-solução)
+  - [Driver Assembly (funcoes.s)](#driver-assembly-funcoess)
+  - [Aplicação C (main.c)](#aplicação-c-mainc)
+  - [Integração C e Assembly](#integração-c-e-assembly)
+- [Testes e Validação](#testes-e-validação)
+  - [Metodologia de Testes](#metodologia-de-testes)
+  - [Depuração com GDB](#depuração-com-gdb)
+  - [Resultados](#resultados)
+- [Conclusão](#conclusão)
+- [Referências](#referências)
 
 ## Introdução
 Este relatório descreve o desenvolvimento do Marco 2 de um sistema embarcado voltado para a classificação de imagens de dígitos numéricos (TEC499 — UEFS, 2026.1), com foco na integração entre o HPS e a FPGA da plataforma DE1-SoC e no desenvolvimento do driver Linux em Assembly ARM responsável por controlar o co-processador ELM via MMIO.
@@ -154,8 +168,14 @@ O projeto contribuiu significativamente para o aprendizado da equipe em áreas c
 
 ## Referências
 DEV TECH. Tutorial Makefile em C. YouTube, 2020. Disponível em: https://youtu.be/U6IfLZOh6Sc
+
 MATOS, Kamilly. Coprocessador de Imagens PBL SD. GitHub, 2025. Disponível em: https://github.com/kamillymatos/coprocessador-de-imagens-pbl-sd-2
+
 Um guia completo para o desenvolvimento de API. AppMaster. Disponível em: https://appmaster.io/pt/blog/um-guia-completo-para-o-desenvolvimento-da-api
+
 GANEKO, Yudi. O que é API (em 2 minutos). YouTube, 2025. Disponível em: https://youtu.be/Q-lyQ7BdDXE
-NASCIMENTO, Maike. Problema SD 2026.1. GitHub, 2026. Disponível em: https://github.com/DestinyWolf/Problema_SD_2026_1
+
+NASCIMENTO, Maike. Problema SD 2026.1. GitHub, 2026. Disponível em: https://github.com/DestinyWolf/
+Problema_SD_2026_1
+
 The Linux man-pages project. mmap — map files or devices into memory. Disponível em: https://man7.org/linux/man-pages/man2/mmap.2.html
