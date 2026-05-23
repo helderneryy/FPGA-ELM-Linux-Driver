@@ -27,6 +27,7 @@
   - [Metodologia de Testes](#metodologia-de-testes)
   - [Depuração com GDB](#depuração-com-gdb)
   - [Resultados](#resultados)
+- [Modo de Uso](#modo-de-uso)
 - [Conclusão](#conclusão)
 - [Referências](#referências)
 
@@ -158,6 +159,14 @@ Durante o desenvolvimento do driver, o GDB foi utilizado como ferramenta de depu
 ### Resultados
 
 O sistema classificou corretamente 83 das 100 imagens testadas, atingindo uma acurácia de 83%. O relatório gerado pelo script detalha os acertos e erros por dígito, permitindo identificar quais classes apresentaram maior dificuldade de classificação. O resultado demonstra que a comunicação entre o HPS e o co-processador ELM foi estabelecida com sucesso e que o fluxo completo de inferência, desde o envio da imagem até a leitura do dígito predito, funcionou de forma estável ao longo de todos os testes realizados.
+
+## Modo de Uso
+O projeto utiliza um Makefile para automatizar o processo de compilação e execução. Para compilar, basta executar make build, que compila separadamente o módulo C e o módulo Assembly e os linka em um único executável chamado exe. Para executar o programa, o comando make run já cuida de rodar o executável com sudo, necessário para acessar o /dev/mem e realizar o mapeamento de memória da FPGA.
+
+Caso queira limpar os arquivos gerados pela compilação, make clean remove os objetos e o executável.
+Para rodar os testes com as 100 imagens, o comando make test executa o script teste_batch.sh, que automatiza todo o processo de classificação e gera um relatório detalhado em resultados.txt com os acertos, erros e a acurácia final do sistema.
+
+Ao executar o programa, um menu interativo é exibido com 13 opções que permitem controlar cada etapa do fluxo individualmente, desde a inicialização do hardware até a leitura do resultado. Para classificar uma imagem de forma automática e sem precisar executar cada passo manualmente, basta selecionar a opção 1, que orquestra todo o fluxo em sequência e imprime o dígito predito na tela. Para alterar a imagem a ser classificada, a opção 13 solicita que o usuário informe o caminho completo do novo arquivo .bin, substituindo o caminho anterior.
 
 ## Conclusão
 O desenvolvimento do Marco 2 foi concluído com sucesso, atingindo todos os objetivos propostos pelo enunciado. A equipe realizou a integração do co-processador ELM ao projeto Quartus via ponte Lightweight HPS-to-FPGA, implementou o driver em Assembly ARM com uma API completa para controle do hardware via MMIO, e desenvolveu uma aplicação em C com menu interativo capaz de orquestrar o fluxo completo de classificação de imagens de dígitos numéricos.
