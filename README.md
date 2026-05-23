@@ -144,3 +144,10 @@ Durante o desenvolvimento do driver, o GDB foi utilizado como ferramenta de depu
 ### Resultados
 
 O sistema classificou corretamente 83 das 100 imagens testadas, atingindo uma acurácia de 83%. O relatório gerado pelo script detalha os acertos e erros por dígito, permitindo identificar quais classes apresentaram maior dificuldade de classificação. O resultado demonstra que a comunicação entre o HPS e o co-processador ELM foi estabelecida com sucesso e que o fluxo completo de inferência, desde o envio da imagem até a leitura do dígito predito, funcionou de forma estável ao longo de todos os testes realizados.
+
+## Conclusão
+O desenvolvimento do Marco 2 foi concluído com sucesso, atingindo todos os objetivos propostos pelo enunciado. A equipe realizou a integração do co-processador ELM ao projeto Quartus via ponte Lightweight HPS-to-FPGA, implementou o driver em Assembly ARM com uma API completa para controle do hardware via MMIO, e desenvolveu uma aplicação em C com menu interativo capaz de orquestrar o fluxo completo de classificação de imagens de dígitos numéricos.
+
+A validação do sistema foi realizada com 100 imagens, 10 de cada dígito, atingindo uma acurácia de 83%. O resultado demonstra que a solução desenvolvida é funcional e estável, cumprindo o requisito de classificar imagens repetidamente sem falhas de comunicação entre o HPS e a FPGA.
+
+O projeto contribuiu significativamente para o aprendizado da equipe em áreas como programação em Assembly ARM, MMIO, integração HPS-FPGA e desenvolvimento de drivers Linux, consolidando na prática os conceitos trabalhados ao longo da disciplina por meio da metodologia PBL.
