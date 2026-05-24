@@ -29,6 +29,7 @@
   - [Resultados](#resultados)
 - [Modo de Uso](#modo-de-uso)
 - [Conclusão](#conclusão)
+  - [Pontos de Melhoria](#pontos-de-melhoria)
 - [Referências](#referências)
 
 ## Introdução
