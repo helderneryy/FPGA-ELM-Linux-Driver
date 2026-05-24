@@ -32,7 +32,7 @@
 - [Referências](#referências)
 
 ## Introdução
-Este relatório descreve o desenvolvimento do Marco 2 de um sistema embarcado voltado para a classificação de imagens de dígitos numéricos (TEC499 — UEFS, 2026.1), com foco na integração entre o HPS e a FPGA da plataforma DE1-SoC e no desenvolvimento do driver Linux em Assembly ARM responsável por controlar o co-processador ELM via MMIO.
+Este relatório descreve o desenvolvimento do Marco 2 de um sistema embarcado voltado para a classificação de imagens de dígitos numéricos, com foco na integração entre o HPS e a FPGA da plataforma DE1-SoC e no desenvolvimento do driver Linux em Assembly ARM responsável por controlar o co-processador ELM via MMIO.
 
 O problema proposto consiste em construir um classificador capaz de receber uma imagem 28×28 pixels em escala de cinza no formato PNG, processá-la através de uma rede neural ELM implementada no co-processador em FPGA, e retornar o dígito previsto entre 0 e 9. O co-processador responsável por executar essa inferência foi desenvolvido no Marco 1 e herdado pelo nosso grupo como base para esta etapa.
 
@@ -47,12 +47,12 @@ A plataforma DE1-SoC é baseada em um SoC (System on Chip) da Intel que combina 
 
 O HPS é responsável por executar o sistema operacional Linux e as aplicações de software, enquanto a FPGA é utilizada para implementar circuitos digitais customizados em hardware, como o co-processador ELM desenvolvido no Marco 1. Essa combinação permite que tarefas computacionalmente intensivas sejam aceleradas em hardware, enquanto o controle e a interface com o usuário ficam a cargo do processador.
 
-A comunicação entre o HPS e a FPGA é feita através de pontes dedicadas. No caso deste projeto, foi utilizada a ponte Lightweight HPS-to-FPGA, que permite ao processador acessar registradores e módulos implementados na FPGA como se fossem posições de memória, por meio do mecanismo de MMIO. A Figura 2 apresenta a organização interna da plataforma DE1-SoC, destacando a comunicação entre o HPS e o co-processador ELM implementado na FPGA através dos barramentos Data_in, Signals e Data_out.
+A comunicação entre o HPS e a FPGA é feita através de pontes dedicadas. No caso deste projeto, foi utilizada a ponte Lightweight HPS-to-FPGA, que permite ao processador acessar registradores e módulos implementados na FPGA como se fossem posições de memória, por meio do mecanismo de MMIO. A Figura 1 ilustra a arquitetura da solução desenvolvida, apresentando as três camadas do sistema e os mecanismos de comunicação entre elas. 
 
-![SoC DE1-SoC](diagrama_SoC.png)
+![Arquitetura da Solução](Diagrama%20Arquitetura%20da%20Solução.drawio.png)
 
-*Figura 2: Organização interna da plataforma DE1-SoC*
 
+*Figura 1: Arquitetura da Solução*
 
 ### MMIO
 MMIO (Memory-Mapped I/O) é uma técnica que permite ao processador se comunicar com dispositivos de hardware acessando endereços de memória específicos. Em vez de utilizar instruções dedicadas de I/O, o processador simplesmente lê e escreve nesses endereços como se fossem posições normais de memória RAM, e o hardware responde a essas operações.
@@ -60,7 +60,7 @@ MMIO (Memory-Mapped I/O) é uma técnica que permite ao processador se comunicar
 Na DE1-SoC, os registradores do co-processador implementado na FPGA são mapeados em endereços físicos acessíveis pelo HPS através da ponte Lightweight HPS-to-FPGA, a partir do endereço base 0xFF200000. Para acessar esses endereços a partir de um programa rodando no Linux, é necessário abrir o arquivo especial /dev/mem e utilizar a syscall mmap para mapear a região física para um endereço virtual acessível pelo processo, mecanismo que foi utilizado diretamente no driver desenvolvido pela equipe.
 
 ### Assembly ARM
-Assembly ARM é a linguagem de programação de baixo nível que permite escrever instruções diretamente executáveis pelo processador ARM. Diferente de linguagens de alto nível, o Assembly oferece controle total sobre os registradores e a memória do processador, sendo frequentemente utilizado em situações onde desempenho e acesso direto ao hardware são necessários, como na implementação de drivers.
+Assembly ARM é a linguagem de programação de baixo nível que permite escrever instruções diretamente executáveis pelo processador ARM. No contexto deste projeto, foi utilizada a arquitetura ARMv7, presente no processador da plataforma DE1-SoC. Diferente de linguagens de alto nível, o Assembly oferece controle total sobre os registradores e a memória do processador, sendo frequentemente utilizado em situações onde desempenho e acesso direto ao hardware são necessários, como na implementação de drivers.
 
 O processador ARM organiza seu estado interno em registradores de uso geral, sendo os principais r0 a r12, além do SP (stack pointer), LR (link register) e PC (program counter). A convenção de chamada AAPCS define regras para passagem de argumentos, retorno de valores e preservação de registradores entre funções, permitindo que código Assembly e código C coexistam no mesmo projeto. A comunicação com o sistema operacional é feita através de syscalls, instruções especiais que solicitam serviços ao kernel como abertura de arquivos e mapeamento de memória.
 
@@ -100,8 +100,8 @@ A Unidade de Inferência abriga os MACs e os bancos de registradores utilizados 
 ### Load/Store Unit
 A Load/Store Unit gerencia as operações de leitura e escrita de memória, implementando quatro instâncias de memória RAM de duas portas: mem_img, que armazena os 784 pixels da imagem; mem_win, que armazena os 100352 pesos da camada oculta; mem_bias, que armazena os 128 valores de bias; e mem_beta, que armazena os 1280 valores de beta da camada de saída.
 
-### conjunto de instruções
-Em relação ao conjunto de instruções, o co-processador implementa seis instruções de 32 bits: Store Image (opcode 000), Store Weights Addr (001), Store Weights Value (010), Store Bias (011), Store Beta (100) e Start (101). A comunicação com o co-processador é feita através de três barramentos: Data In (32 bits), utilizado para envio das instruções; Signals (3 bits), utilizado para envio de sinais de controle como Enable, Clear Operation e Reset; e Data Out (32 bits), que retorna o resultado da inferência e as flags de Done, Busy e Error.
+### Conjunto de instruções
+Em relação ao conjunto de instruções, o co-processador implementa sete instruções de 32 bits: Store Image (opcode 000), Store Weights Addr (001), Store Weights Value (010), Store Bias (011), Store Beta (100), Start (101) e Status (110). Vale destacar que a instrução Status não é utilizada na prática, pois tanto o resultado quanto as flags são atualizados diretamente no barramento de saída sem necessidade de solicitação. A comunicação com o co-processador é feita através de três barramentos: Data In (32 bits), utilizado para envio das instruções; Signals (3 bits), utilizado para envio de sinais de controle como Enable, Clear Operation e Reset; e Data Out (32 bits), que retorna o resultado da inferência e as flags de Done, Busy e Error.
 
 ### Fluxo de execução
 O fluxo de execução do co-processador segue uma sequência bem definida: primeiro os dados são carregados nas memórias via instruções de memória (Store Image, Store Weights, Store Bias e Store Beta), em seguida a instrução Start dispara o processo de inferência, que percorre a camada oculta, aplica a função de ativação tanh, processa a camada de saída e por fim executa o argmax para determinar o dígito classificado. O resultado fica disponível no barramento Data Out junto com a flag de Done indicando a conclusão da operação.
@@ -113,19 +113,18 @@ Os roteiros disponibilizados ao longo do processo foram fundamentais para guiar 
 
 O Lab 0 foi relevante para familiarizar a equipe com o ambiente de desenvolvimento, auxiliando nos primeiros contatos com o uso do terminal, a conexão com a placa DE1-SoC e aspectos básicos do fluxo de trabalho que seriam utilizados ao longo do projeto.
 
-O Lab 2 foi o mais diretamente aplicável ao desenvolvimento do Marco 2. Por meio dele, a equipe compreendeu como funciona a integração entre o HPS e a FPGA, especialmente como abrir o projeto base no Quartus, visualizar o HPS e instanciar um módulo no top level do projeto, processo essencial para integrar o co-processador do Maike ao sistema. Essa compreensão orientou diretamente as decisões tomadas na etapa de integração HPS-FPGA.
+O Lab 2 foi o mais diretamente aplicável ao desenvolvimento do Marco 2. Por meio dele, a equipe compreendeu como funciona a integração entre o HPS e a FPGA, especialmente como abrir o projeto base no Quartus, visualizar o HPS e instanciar um módulo no top level do projeto, processo essencial para integrar o co-processador de Maike ao sistema. Essa compreensão orientou diretamente as decisões tomadas na etapa de integração HPS-FPGA.
 
 No decorrer das sessões, a equipe decidiu por conta própria elaborar um fluxo de informações inicial, que serviu como base conceitual para o entendimento do sistema, sem ainda definir as instruções de forma concreta. Paralelamente, foram realizadas pesquisas sobre temas como polling, MMIO, como estruturar uma API em Assembly e outros conceitos relacionados, que trouxeram mudanças significativas na compreensão teórica da equipe e orientaram as decisões de implementação ao longo do desenvolvimento.
 
 No desenvolvimento do driver, a equipe optou por implementar diretamente em Assembly ARM, sem passar por uma versão intermediária em C. Para garantir a corretude da implementação, foi utilizado o GDB como ferramenta de depuração, permitindo inspecionar o estado de cada registrador em tempo real a cada etapa da execução. A integração no Quartus foi realizada com base no aprendizado do Lab 2, seguindo o mesmo processo de construção do top level para instanciar o co-processador no projeto base.
 
 ## Descrição da Solução
-A solução desenvolvida é composta por três camadas que trabalham em conjunto: o driver em Assembly ARM, a aplicação em C e o header de integração entre os dois. O driver é responsável por toda a comunicação de baixo nível com o co-processador via MMIO, expondo uma API que a aplicação C utiliza para orquestrar o fluxo completo de classificação. A comunicação entre as camadas é feita através do arquivo funcoes.h, que declara os protótipos das funções Assembly para o compilador C, permitindo a link-edição dos dois módulos em um único executável. A Figura 1 ilustra a arquitetura da solução desenvolvida, apresentando as três camadas do sistema e os mecanismos de comunicação entre elas.
+A solução desenvolvida é composta por três camadas que trabalham em conjunto: o driver em Assembly ARM, a aplicação em C e o header de integração entre os dois. O driver é responsável por toda a comunicação de baixo nível com o co-processador via MMIO, expondo uma API que a aplicação C utiliza para orquestrar o fluxo completo de classificação. A comunicação entre as camadas é feita através do arquivo funcoes.h, que declara os protótipos das funções Assembly para o compilador C, permitindo a link-edição dos dois módulos em um único executável.A Figura 2 apresenta a organização interna da plataforma DE1-SoC, destacando a comunicação entre o HPS e o co-processador ELM implementado na FPGA através dos barramentos Data_in, Signals e Data_out.
 
-![Arquitetura da Solução](Diagrama%20Arquitetura%20da%20Solução.drawio.png)
+![SoC DE1-SoC](diagrama_SoC.png)
 
-
-*Figura 1: Arquitetura da Solução*
+*Figura 2: Diagrama de comunicação HPS e coprocessador*
 
 ### Driver Assembly (funcoes.s)
 
@@ -135,10 +134,13 @@ O driver foi implementado inteiramente em Assembly ARM e organiza suas funções
 
 *Figura 3: Mapeamento dos PIOs no Platform Designer*
 
-A função iniciar abre o arquivo /dev/mem via syscall open e mapeia a região física da ponte Lightweight HPS-to-FPGA para um endereço virtual acessível pelo processo, utilizando a syscall mmap2. O endereço virtual retornado é salvo em FPGA_BASE e utilizado por todas as demais funções. Ao final, fechar desfaz esse mapeamento via munmap e fecha o file descriptor.
-As funções resetar e limpar enviam pulsos nos bits 2 e 1 do pio_signals, respectivamente, garantindo que o co-processador esteja em estado IDLE antes de cada inferência.
-As funções de envio de dados (send_image, send_weights, send_bias, send_beta) montam as instruções seguindo o formato da ISA do co-processador, posicionando o opcode nos bits [2:0], o endereço e o dado nos campos correspondentes via deslocamentos e operações de OR, e então escrevem a instrução no pio_data_in seguida de um pulso de enable. Os pesos são enviados em dois ciclos por valor: primeiro a instrução de endereço (opcode 001) e em seguida a instrução de valor (opcode 010). Os valores de bias e beta são representados em ponto fixo Q4.12 e passam por rev16 para correção de endianness antes do envio.
-A função send_start envia apenas o opcode 101 ao co-processador, disparando o início da inferência. Em seguida, polling fica em loop lendo o pio_data_out até que o bit 4 (Done) seja 1, indicando que o co-processador concluiu. Por fim, ler_resultado isola os bits [3:0] do pio_data_out, que contêm o dígito predito entre 0 e 9. A Figura 4 apresenta o fluxo de execução do driver, descrevendo a sequência de passos realizados desde a abertura do /dev/mem até a leitura do dígito predito.
+A função "iniciar" abre o arquivo "/dev/mem" via syscall "open" e mapeia a região física da ponte Lightweight HPS-to-FPGA para um endereço virtual acessível pelo processo, utilizando a syscall "mmap2". O endereço virtual retornado é salvo em "FPGA_BASE" e utilizado por todas as demais funções. Ao final, "fechar" desfaz esse mapeamento via "munmap" e fecha o file descriptor.
+
+As funções "resetar" e "limpar" enviam pulsos nos bits 2 e 1 do "pio_signals", respectivamente, garantindo que o co-processador esteja em estado IDLE antes de cada inferência.
+
+As funções de envio de dados "send_image", "send_weights", "send_bias" e "send_beta" montam as instruções seguindo o formato da ISA do co-processador, posicionando o opcode nos bits [2:0], o endereço e o dado nos campos correspondentes via deslocamentos e operações de OR, e então escrevem a instrução no "pio_data_in" seguida de um pulso de enable. Os pesos são enviados em dois ciclos por valor: primeiro a instrução de endereço (opcode 001) e em seguida a instrução de valor (opcode 010). Os valores de bias e beta são representados em ponto fixo Q4.12 e passam por "rev16" para correção de endianness antes do envio.
+
+A função "send_start" envia apenas o opcode 101 ao co-processador, disparando o início da inferência. Em seguida, "polling" fica em loop lendo o "pio_data_out" até que o bit 4 (Done) seja 1, indicando que o co-processador concluiu. Por fim, "ler_resultado" isola os bits [3:0] do "pio_data_out", que contêm o dígito predito entre 0 e 9.
 
 ![Fluxo do Driver](fluxo%20de%20execução%20do%20driver.drawio.png)
 
@@ -146,13 +148,17 @@ A função send_start envia apenas o opcode 101 ao co-processador, disparando o 
 
 ### Aplicação C (main.c)
 
-A aplicação em C atua como interface entre o usuário e o driver, oferecendo um menu interativo com 13 opções que permitem executar cada etapa do fluxo individualmente ou de forma automática através da opção de inferência completa.
-A função inferencia_completa encapsula todo o fluxo em sequência: inicializa o hardware caso ainda não tenha sido feito, aplica reset e clear, carrega e envia a imagem, os pesos, o bias e o beta, dispara a inferência via send_start, aguarda o resultado via polling e imprime o dígito predito na tela. O carregamento dos arquivos binários é feito pela função auxiliar carregar_arquivo, que abre o arquivo, lê exatamente o número de bytes esperado e fecha o arquivo, retornando erro caso a leitura seja incompleta.
-A aplicação controla o estado do sistema através de flags internas (hardware_init, img_carregada, pesos_carregados, bias_carregado, beta_carregado), evitando operações indevidas como enviar dados sem o hardware inicializado.
+A aplicação em C atua como interface entre o usuário e o driver, oferecendo um menu interativo com 14 opções que permitem executar cada etapa do fluxo individualmente, de forma manual, ou de forma automática através da opção de inferência completa. No modo manual, o usuário pode enviar cada dado separadamente, inicializando o hardware, carregando e enviando a imagem, os pesos, o bias e o beta em etapas distintas, e por fim iniciando a inferência e lendo o resultado.
+
+A função "inferencia_completa" encapsula todo o fluxo em sequência: inicializa o hardware caso ainda não tenha sido feito, aplica reset e clear, carrega e envia a imagem, os pesos, o bias e o beta, dispara a inferência via "send_start", aguarda o resultado via "polling" e imprime o dígito predito na tela. O carregamento dos arquivos binários é feito pela função auxiliar "carregar_arquivo", que abre o arquivo, lê exatamente o número de bytes esperado e fecha o arquivo, retornando erro caso a leitura seja incompleta.
+
+A aplicação controla o estado do sistema através de flags internas, evitando operações indevidas como enviar dados sem o hardware inicializado.
 
 ### Integração C e Assembly
 
-A integração entre a aplicação C e o driver Assembly é feita através do arquivo funcoes.h, que declara os protótipos de todas as funções exportadas pelo driver. O arquivo Assembly exporta cada função com .global e .type, tornando os símbolos visíveis ao linker. A compilação é feita separadamente com gcc -marm -c, gerando os arquivos objeto main.o e funcoes.o, que são então linkados em um único executável pelo comando gcc -marm main.o funcoes.o -o exe. A convenção de chamada AAPCS é respeitada em todas as funções do driver, garantindo compatibilidade com o código C.
+A integração entre a aplicação C e o driver Assembly é feita através do arquivo "funcoes.h", que declara os protótipos de todas as funções exportadas pelo driver. O arquivo Assembly exporta cada função com ".global" e ".type", tornando os símbolos visíveis ao linker. A compilação é feita separadamente com "gcc -marm -c", gerando os arquivos objeto "main.o" e "funcoes.o", que são então linkados em um único executável pelo comando "gcc -marm main.o funcoes.o -o exe". A convenção de chamada AAPCS é respeitada em todas as funções do driver, garantindo compatibilidade com o código C.
+
+Todo esse processo é automatizado pelo Makefile, que define quatro regras principais: "build", que compila os módulos C e Assembly separadamente e os linka em um único executável; "run", que executa o programa com "sudo"; "test", que executa o script de testes batch; e "clean", que remove os arquivos gerados pela compilação. Dessa forma, o desenvolvedor não precisa executar os comandos de compilação manualmente a cada alteração no código.
 
 ## Testes e Validação
 Esta seção descreve o processo de testes realizado pela equipe para validar o funcionamento do sistema, abrangendo tanto a depuração do driver em Assembly durante o desenvolvimento quanto a validação final por meio de um conjunto de imagens de dígitos numéricos.
@@ -165,7 +171,11 @@ O fluxo do script consiste em montar uma sequência de inputs simulando a intera
 
 ### Depuração com GDB
 
-Durante o desenvolvimento do driver, o GDB foi utilizado como ferramenta de depuração para validar o comportamento do código Assembly em tempo de execução. Como o driver é implementado diretamente em Assembly ARM, qualquer erro em um registrador pode quebrar o fluxo silenciosamente, sem mensagens de erro visíveis. O GDB permitiu que a equipe inspecionasse o estado dos registradores a cada etapa, verificando se o valor montado da instrução estava correto antes de ser enviado ao co-processador via pio_data_in, se o mmap retornou um endereço virtual válido para a ponte LW, e se o polling estava testando o bit correto do pio_data_out para detectar o sinal de Done.
+Durante o desenvolvimento do driver, o GDB foi utilizado como ferramenta de depuração para validar o comportamento do código Assembly em tempo de execução. Como o driver é implementado diretamente em Assembly ARM, qualquer erro em um registrador pode quebrar o fluxo silenciosamente, sem mensagens de erro visíveis. O GDB permitiu que a equipe inspecionasse o estado dos registradores a cada etapa, verificando se o valor montado da instrução estava correto antes de ser enviado ao co-processador via pio_data_in, se o mmap retornou um endereço virtual válido para a ponte LW, e se o polling estava testando o bit correto do pio_data_out para detectar o sinal de Done.A Figura 5 ilustra o uso do GDB durante a depuração do driver, mostrando o estado dos registradores no loop de envio da imagem.
+
+
+![Depuração com GDB](gdb_debug_send_image.png)
+*Figura 5: Uso do GDB durante a depuração do driver*
 
 ### Resultados
 
@@ -177,10 +187,10 @@ O projeto utiliza um Makefile para automatizar o processo de compilação e exec
 Caso queira limpar os arquivos gerados pela compilação, make clean remove os objetos e o executável.
 Para rodar os testes com as 100 imagens, o comando make test executa o script teste_batch.sh, que automatiza todo o processo de classificação e gera um relatório detalhado em resultados.txt com os acertos, erros e a acurácia final do sistema.
 
-Ao executar o programa, um menu interativo é exibido com 13 opções que permitem controlar cada etapa do fluxo individualmente, desde a inicialização do hardware até a leitura do resultado. Para classificar uma imagem de forma automática e sem precisar executar cada passo manualmente, basta selecionar a opção 1, que orquestra todo o fluxo em sequência e imprime o dígito predito na tela. Para alterar a imagem a ser classificada, a opção 13 solicita que o usuário informe o caminho completo do novo arquivo .bin, substituindo o caminho anterior.
+Ao executar o programa, um menu interativo é exibido com 14 opções que permitem controlar cada etapa do fluxo individualmente, desde a inicialização do hardware até a leitura do resultado. O usuário pode optar por executar a inferência de forma automática, selecionando a opção 1, que orquestra todo o fluxo em sequência e imprime o dígito predito na tela, ou de forma manual, enviando cada dado separadamente através das opções individuais do menu, o que permite maior controle sobre cada etapa do processo. Para alterar a imagem a ser classificada, a opção 13 solicita que o usuário informe o caminho completo do novo arquivo ".bin", substituindo o caminho anterior.
 
 ## Conclusão
-O desenvolvimento do Marco 2 foi concluído com sucesso, atingindo todos os objetivos propostos pelo enunciado. A equipe realizou a integração do co-processador ELM ao projeto Quartus via ponte Lightweight HPS-to-FPGA, implementou o driver em Assembly ARM com uma API completa para controle do hardware via MMIO, e desenvolveu uma aplicação em C com menu interativo capaz de orquestrar o fluxo completo de classificação de imagens de dígitos numéricos.
+O desenvolvimento do Marco 2 foi concluído com sucesso, atingindo todos os objetivos propostos pelo enunciado. A equipe realizou a integração do co-processador ELM ao projeto Quartus via ponte Lightweight HPS-to-FPGA e implementou o driver em Assembly ARM com uma API completa para controle do hardware via MMIO. Além do que foi requisitado, a equipe desenvolveu uma aplicação em C com menu interativo que vai além do escopo mínimo do Marco 2, oferecendo ao usuário controle granular sobre cada etapa do fluxo de classificação, tanto de forma automática quanto manual.
 
 A validação do sistema foi realizada com 100 imagens, 10 de cada dígito, atingindo uma acurácia de 83%. O resultado demonstra que a solução desenvolvida é funcional e estável, cumprindo o requisito de classificar imagens repetidamente sem falhas de comunicação entre o HPS e a FPGA.
 
