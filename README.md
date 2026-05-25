@@ -209,6 +209,10 @@ O projeto contribuiu significativamente para o aprendizado da equipe em áreas c
 
 Um ponto de melhoria identificado diz respeito ao uso excessivo de syscalls diretas no driver em Assembly ARM. A cada operação realizada, o driver realiza chamadas diretas ao kernel, como "open", "mmap2", "read" e "close", o que representa uma transição constante entre o espaço de usuário e o espaço do kernel. Esse comportamento, além de impactar o desempenho, expõe o sistema a riscos desnecessários, pois o acesso direto à memória física via "/dev/mem" sem as proteções adequadas do sistema operacional pode comprometer a estabilidade do sistema.
 
+### uso da inteligência artificial 
+
+Além das pesquisas tradicionais e dos materiais disponibilizados na disciplina, ferramentas de inteligência artificial também foram utilizadas como apoio durante o desenvolvimento. A IA auxiliou principalmente na identificação e correção de erros no arquivo funcoes.s, contribuindo para a depuração do driver em Assembly ARM, além de auxiliar na criação do script bash responsável pela automatização dos testes com as 100 imagens utilizadas na validação do sistema.
+
 ## Referências
 DEV TECH. Tutorial Makefile em C. YouTube, 2020. Disponível em: https://youtu.be/U6IfLZOh6Sc
 
