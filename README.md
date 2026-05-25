@@ -139,11 +139,11 @@ A função "iniciar" abre o arquivo "/dev/mem" via syscall "open" e mapeia a reg
 
 As funções "resetar" e "limpar" enviam pulsos nos bits 2 e 1 do "pio_signals", respectivamente, garantindo que o co-processador esteja em estado IDLE antes de cada inferência.
 
-As funções de envio de dados "send_image", "send_weights", "send_bias" e "send_beta" montam as instruções seguindo o formato da ISA do co-processador, posicionando o opcode nos bits [2:0], o endereço e o dado nos campos correspondentes via deslocamentos e operações de OR, e então escrevem a instrução no "pio_data_in" seguida de um pulso de enable. Os pesos são enviados em dois ciclos por valor: primeiro a instrução de endereço (opcode 001) e em seguida a instrução de valor (opcode 010). Os valores de bias e beta são representados em ponto fixo Q4.12 e passam por "rev16" para correção de endianness antes do envio.
+As funções de envio de dados "send_image", "send_weights", "send_bias" e "send_beta" montam as instruções seguindo o formato da ISA do co-processador, posicionando o opcode nos bits [2:0], o endereço e o dado nos campos correspondentes via deslocamentos e operações de OR, e então escrevem a instrução no "pio_data_in" seguida de um pulso de enable. Os pesos são enviados em dois ciclos por valor: primeiro a instrução de endereço (opcode 001) e em seguida a instrução de valor (opcode 010). Os valores de bias, beta e weights são representados em ponto fixo Q4.12 e passam por "rev16" para correção de endianness antes do envio.
 
 Durante o desenvolvimento do driver, foi necessário considerar o formato de endianness utilizado pelo processador ARM da plataforma DE1-SoC. O ARM Cortex-A9 opera naturalmente em modo little endian, ou seja, o byte menos significativo é armazenado no menor endereço de memória.
 
-No envio dos valores de bias e beta para o coprocessador, observou-se a necessidade de reorganizar os bytes dos dados de 16 bits antes da transmissão. Para isso, foi utilizada a instrução rev16, responsável por inverter a ordem dos bytes dentro de cada halfword de 16 bits.
+No envio dos valores de bias, beta e weights para o coprocessador, observou-se a necessidade de reorganizar os bytes dos dados de 16 bits antes da transmissão. Para isso, foi utilizada a instrução rev16, responsável por inverter a ordem dos bytes dentro de cada halfword de 16 bits.
 
 Essa conversão foi necessária para garantir que os valores em ponto fixo Q4.12 fossem interpretados corretamente pelo hardware durante o processo de inferência. Sem essa correção, os bytes seriam lidos em ordem incorreta, comprometendo os resultados produzidos pelo co-processador.
 
