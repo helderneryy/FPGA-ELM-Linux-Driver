@@ -50,7 +50,7 @@ O HPS é responsável por executar o sistema operacional Linux e as aplicações
 
 A comunicação entre o HPS e a FPGA é feita através de pontes dedicadas. No caso deste projeto, foi utilizada a ponte Lightweight HPS-to-FPGA, que permite ao processador acessar registradores e módulos implementados na FPGA como se fossem posições de memória, por meio do mecanismo de MMIO. A Figura 1 ilustra a arquitetura da solução desenvolvida, apresentando as três camadas do sistema e os mecanismos de comunicação entre elas. 
 
-![Arquitetura da Solução](Diagrama%20Arquitetura%20da%20Solução.drawio.png)
+![Arquitetura da Solução](imagens/Diagrama%20Arquitetura%20da%20Solução.drawio.png)
 
 
 *Figura 1: Arquitetura da Solução*
@@ -123,7 +123,7 @@ No desenvolvimento do driver, a equipe optou por implementar diretamente em Asse
 ## Descrição da Solução
 A solução desenvolvida é composta por três camadas que trabalham em conjunto: o driver em Assembly ARM, a aplicação em C e o header de integração entre os dois. O driver é responsável por toda a comunicação de baixo nível com o co-processador via MMIO, expondo uma API que a aplicação C utiliza para orquestrar o fluxo completo de classificação. A comunicação entre as camadas é feita através do arquivo funcoes.h, que declara os protótipos das funções Assembly para o compilador C, permitindo a link-edição dos dois módulos em um único executável.A Figura 2 apresenta a organização interna da plataforma DE1-SoC, destacando a comunicação entre o HPS e o co-processador ELM implementado na FPGA através dos barramentos Data_in, Signals e Data_out.
 
-![SoC DE1-SoC](diagrama_SoC.png)
+![SoC DE1-SoC](imagens/diagrama_SoC.png)
 
 *Figura 2: Diagrama de comunicação HPS e coprocessador*
 
@@ -131,7 +131,7 @@ A solução desenvolvida é composta por três camadas que trabalham em conjunto
 
 O driver foi implementado inteiramente em Assembly ARM e organiza suas funções em torno de três PIOs mapeados a partir do endereço base 0xFF200000: pio_data_out (offset 0x00), utilizado para leitura do resultado e flags; pio_signals (offset 0x10), utilizado para envio de sinais de controle como enable, reset e clear; e pio_data_in (offset 0x20), utilizado para envio das instruções ao co-processador. A Figura 3 apresenta o mapeamento dos PIOs no Platform Designer, confirmando os endereços base utilizados pelo driver para acessar os registradores do co-processador via MMIO.
 
-![PIOs no Platform Designer](PIO.png)
+![PIOs no Platform Designer](imagens/PIO.png)
 
 *Figura 3: Mapeamento dos PIOs no Platform Designer*
 
@@ -139,19 +139,19 @@ A função "iniciar" abre o arquivo "/dev/mem" via syscall "open" e mapeia a reg
 
 As funções "resetar" e "limpar" enviam pulsos nos bits 2 e 1 do "pio_signals", respectivamente, garantindo que o co-processador esteja em estado IDLE antes de cada inferência.
 
-As funções de envio de dados "send_image", "send_weights", "send_bias" e "send_beta" montam as instruções seguindo o formato da ISA do co-processador, posicionando o opcode nos bits [2:0], o endereço e o dado nos campos correspondentes via deslocamentos e operações de OR, e então escrevem a instrução no "pio_data_in" seguida de um pulso de enable. Os pesos são enviados em dois ciclos por valor: primeiro a instrução de endereço (opcode 001) e em seguida a instrução de valor (opcode 010). Os valores de bias, beta e weights são representados em ponto fixo Q4.12 e passam por "rev16" para correção de endianness antes do envio.
+As funções de envio de dados "send_image", "send_weights", "send_bias" e "send_beta" montam as instruções seguindo o formato da ISA do co-processador, posicionando o opcode nos bits [2:0], o endereço e o dado nos campos correspondentes via deslocamentos e operações de OR, e então escrevem a instrução no "pio_data_in" seguida de um pulso de enable. Os pesos são enviados em dois ciclos por valor: primeiro a instrução de endereço (opcode 001) e em seguida a instrução de valor (opcode 010). Os valores de bias e beta são representados em ponto fixo Q4.12 e passam por "rev16" para correção de endianness antes do envio.
 
 Durante o desenvolvimento do driver, foi necessário considerar o formato de endianness utilizado pelo processador ARM da plataforma DE1-SoC. O ARM Cortex-A9 opera naturalmente em modo little endian, ou seja, o byte menos significativo é armazenado no menor endereço de memória.
 
-No envio dos valores de bias, beta e weights para o coprocessador, observou-se a necessidade de reorganizar os bytes dos dados de 16 bits antes da transmissão. Para isso, foi utilizada a instrução rev16, responsável por inverter a ordem dos bytes dentro de cada halfword de 16 bits.
+No envio dos valores de bias e beta para o coprocessador, observou-se a necessidade de reorganizar os bytes dos dados de 16 bits antes da transmissão. Para isso, foi utilizada a instrução rev16, responsável por inverter a ordem dos bytes dentro de cada halfword de 16 bits.
 
 Essa conversão foi necessária para garantir que os valores em ponto fixo Q4.12 fossem interpretados corretamente pelo hardware durante o processo de inferência. Sem essa correção, os bytes seriam lidos em ordem incorreta, comprometendo os resultados produzidos pelo co-processador.
 
 Dessa forma, o driver garante que os dados enviados ao hardware estejam organizados na ordem esperada pelo co-processador, assegurando a correta interpretação dos valores durante as operações de leitura e escrita realizadas via MMIO.
 
-A função "send_start" envia apenas o opcode 101 ao co-processador, disparando o início da inferência. Em seguida, "polling" fica em loop lendo o "pio_data_out" até que o bit 4 (Done) seja 1, indicando que o co-processador concluiu. Por fim, "ler_resultado" isola os bits [3:0] do "pio_data_out", que contêm o dígito predito entre 0 e 9.
+A função "send_start" envia apenas o opcode 101 ao co-processador, disparando o início da inferência. Em seguida, "polling" fica em loop lendo o "pio_data_out" até que o bit 4 (Done) seja 1, indicando que o co-processador concluiu. Por fim, "ler_resultado" isola os bits [3:0] do "pio_data_out", que contêm o dígito predito entre 0 e 9. A Figura 4 apresenta o mapeamento dos PIOs no Platform Designer, confirmando os endereços base utilizados pelo driver para acessar os registradores do co-processador via MMIO.
 
-![Fluxo do Driver](fluxo%20de%20execução%20do%20driver.drawio.png)
+![Fluxo do Driver](imagens/fluxo%20de%20execução%20do%20driver.drawio.png)
 
 *Figura 4: Fluxo de execução do driver*
 
@@ -172,6 +172,8 @@ Todo esse processo é automatizado pelo Makefile, que define quatro regras princ
 ## Testes e Validação
 Esta seção descreve o processo de testes realizado pela equipe para validar o funcionamento do sistema, abrangendo tanto a depuração do driver em Assembl durante o desenvolvimento quanto a validação final por meio de um conjunto de imagens de dígitos numéricos.
 
+Durante os testes, foi observado que os valores de beta estavam sendo interpretados com os bytes invertidos durante a leitura pelo co-processador, resultando em valores incorretos na inferência. Para corrigir esse problema, foi utilizada a instrução "rev16", citada anteriormente na descrição das funções do arquivo funcoes.s, responsável por reorganizar os bytes dos dados de 16 bits antes do envio ao hardware, garantindo a interpretação correta dos valores em ponto fixo Q4.12.
+
 ### Metodologia de Testes
 
 Os testes foram realizados por meio de um script batch (teste_batch.sh), executado via make test. O script compila o projeto automaticamente, percorre um diretório com 100 imagens organizadas em subpastas por dígito, sendo 10 imagens de cada dígito de 0 a 9, executa o classificador para cada imagem e gera um relatório final em resultados.txt com o resultado de cada classificação e a acurácia geral do sistema.
@@ -183,7 +185,7 @@ O fluxo do script consiste em montar uma sequência de inputs simulando a intera
 Durante o desenvolvimento do driver, o GDB foi utilizado como ferramenta de depuração para validar o comportamento do código Assembly em tempo de execução. Como o driver é implementado diretamente em Assembly ARM, qualquer erro em um registrador pode quebrar o fluxo silenciosamente, sem mensagens de erro visíveis. O GDB permitiu que a equipe inspecionasse o estado dos registradores a cada etapa, verificando se o valor montado da instrução estava correto antes de ser enviado ao co-processador via pio_data_in,se o mmap retornou um endereço virtual válido para a ponte LW, e se o polling estava testando o bit correto do pio_data_out para detectar o sinal de Done.A Figura 5 ilustra o uso do GDB durante a depuração do driver, mostrando o estado dos registradores no loop de envio da imagem.
 
 
-![Depuração com GDB](gdb_debug_send_image.png)
+![Depuração com GDB](imagens/gdb_debug_send_image.png)
 *Figura 5: Uso do GDB durante a depuração do driver*
 
 ### Resultados
@@ -199,9 +201,9 @@ Para rodar os testes com as 100 imagens, o comando make test executa o script te
 Ao executar o programa, um menu interativo é exibido com 14 opções que permitem controlar cada etapa do fluxo individualmente, desde a inicialização do hardware até a leitura do resultado. O usuário pode optar por executar a inferência de forma automática, selecionando a opção 1, que orquestra todo o fluxo em sequência e imprime o dígito predito na tela, ou de forma manual, enviando cada dado separadamente através das opções individuais do menu, o que permite maior controle sobre cada etapa do processo. Para alterar a imagem a ser classificada, a opção 13 solicita que o usuário informe o caminho completo do novo arquivo ".bin", substituindo o caminho anterior.
 
 ## Conclusão
-O desenvolvimento do Marco 2 foi concluído com sucesso, atingindo todos os objetivos propostos pelo enunciado. A equipe realizou a integração do co-processador ELM ao projeto Quartus via ponte Lightweight HPS-to-FPGA e implementou o driver em Assembly ARM com uma API completa para controle do hardware via MMIO. Além do que foi requisitado, a equipe desenvolveu uma aplicação em C com menu interativo que vai além do escopo mínimo do Marco 2, oferecendo ao usuário controle granular sobre cada etapa do fluxo de classificação, tanto de forma automática quanto manual.
+O desenvolvimento do Marco 2 foi concluido com sucesso, atingindo todos os objetivos propostos pelo enunciado. A equipe realizou a integração do co-processador ELM ao projeto Quartus via ponte Lightweight HPS-to-FPGA e implementou o driver em Assembly ARM com uma API completa para controle do hardware via MMIO. Além do que foi requisitado, a equipe desenvolveu uma aplicação em C com menu interativo que vai além do escopo mínimo do Marco 2, oferecendo ao usuário controle granular sobre cada etapa do fluxo de classificação, tanto de forma automática quanto manual.
 
-A validação do sistema foi realizada com 100 imagens, 10 de cada dígito, atingindo uma acurácia de 83%. O resultado demonstra que a solução desenvolvida é funcional e estável, cumprindo o requisito de classificar imagens repetidamente sem falhas de comunicação entre o HPS e a FPGA.
+A validação do sistema foi realizada com 100 imagens, 10 de cada digito, atingindo uma acurácia de 83%. O resultado demonstra que a solução desenvolvida é funcional e estável, cumprindo o requisito de classificar imagens repetidamente sem falhas de comunicação entre o HPS e a FPGA.
 
 O projeto contribuiu significativamente para o aprendizado da equipe em áreas como programação em Assembly ARM, MMIO, integração HPS-FPGA e desenvolvimento de drivers Linux, consolidando na prática os conceitos trabalhados ao longo da disciplina por meio da metodologia PBL.
 
