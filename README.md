@@ -56,7 +56,7 @@ A comunicação entre o HPS e a FPGA é feita através de pontes dedicadas. No c
 *Figura 1: Arquitetura da Solução*
 
 ### MMIO
-MMIO (Memory-Mapped I/O) é uma técnica que permite ao processador se comunicar com dispositivos de hardware acessando endereços de memória específicos. Em vez de utilizar instruções dedicadas de I/O, o processador simplesmente lê e escreve nesses endereços como se fossem posições normais de memória RAM, e o hardware responde a essas operações.
+MMIO (Memory-Mapped I/O) é uma tecnica que permite ao processador se comunicar com dispositivos de hardware acessando endereços de memória específicos. Em vez de utilizar instruções dedicadas de I/O, o processador simplesmente lê e escreve nesses endereços como se fossem posições normais de memória RAM, e o hardware responde a essas operações.
 
 Na DE1-SoC, os registradores do co-processador implementado na FPGA são mapeados em endereços físicos acessíveis pelo HPS através da ponte Lightweight HPS-to-FPGA, a partir do endereço base 0xFF200000. Para acessar esses endereços a partir de um programa rodando no Linux, é necessário abrir o arquivo especial /dev/mem e utilizar a syscall mmap para mapear a região física para um endereço virtual acessível pelo processo, mecanismo que foi utilizado diretamente no driver desenvolvido pela equipe.
 
@@ -82,7 +82,7 @@ A saída esperada é um número inteiro no intervalo [0, 9] correspondente ao d�
 
 
 ### Driver
-O driver deve ser implementado em Assembly ARM e atuar como interface entre a aplicação C e o co-processador ELM via MMIO, expondo uma API que permita à aplicação inicializar o hardware, enviar a imagem, os pesos e o bias, iniciar a inferência, aguardar a finalização via polling e retornar o resultado da classificação. Além disso, deve garantir a correta sincronização entre o HPS e a FPGA, assegurando que os dados sejam transferidos na ordem correta e que o co-processador esteja pronto antes de cada operação.
+O driver deve ser implementado em Assembly ARM e atuar como interface entre a aplicação C e o co-processador ELM via MMIO, expondo uma API que permita à aplicação inicializar o hardware, enviar a imagem, os pesos e o bias, iniciar a inferência, aguardar a finalização via polling e retornar o resultado da classificação. Alem disso, deve garantir a correta sincronização entre o HPS e a FPGA, assegurando que os dados sejam transferidos na ordem correta e que o co-processador esteja pronto antes de cada operação.
 
 ### Aplicação C
 A aplicação em C deve servir como interface entre o usuário e o sistema, sendo responsável por receber o caminho de uma imagem PNG via linha de comando, realizar a leitura e extração dos pixels e acionar o driver para que o processo de classificação seja iniciado. Após obter o resultado, a aplicação deve imprimir o dígito previsto na tela de forma clara ao usuário.
@@ -102,7 +102,7 @@ A Unidade de Inferência abriga os MACs e os bancos de registradores utilizados 
 A Load/Store Unit gerencia as operações de leitura e escrita de memória, implementando quatro instâncias de memória RAM de duas portas: mem_img, que armazena os 784 pixels da imagem; mem_win, que armazena os 100352 pesos da camada oculta; mem_bias, que armazena os 128 valores de bias; e mem_beta, que armazena os 1280 valores de beta da camada de saída.
 
 ### Conjunto de instruções
-Em relação ao conjunto de instruções, o co-processador implementa sete instruções de 32 bits: Store Image (opcode 000), Store Weights Addr (001), Store Weights Value (010), Store Bias (011), Store Beta (100), Start (101) e Status (110). Vale destacar que a instrução Status não é utilizada na prática, pois tanto o resultado quanto as flags são atualizados diretamente no barramento de saída sem necessidade de solicitação. A comunicação com o co-processador é feita através de três barramentos: Data In (32 bits), utilizado para envio das instruções; Signals (3 bits), utilizado para envio de sinais de controle como Enable, Clear Operation e Reset; e Data Out (32 bits), que retorna o resultado da inferência e as flags de Done, Busy e Error.
+Em relação ao conjunto de instruções, o co-processador implementa sete instruções de 32 bits: Store Image (opcode 000),Store Weights Addr (001), Store Weights Value (010), Store Bias (011), Store Beta (100), Start (101) e Status (110). Vale destacar que a instrução Status não é utilizada na prática, pois tanto o resultado quanto as flags são atualizados diretamente no barramento de saída sem necessidade de solicitação. A comunicação com o co-processador é feita através de três barramentos: Data In (32 bits), utilizado para envio das instruções; Signals (3 bits), utilizado para envio de sinais de controle como Enable, Clear Operation e Reset; e Data Out (32 bits), que retorna o resultado da inferência e as flags de Done, Busy e Error.
 
 ### Fluxo de execução
 O fluxo de execução do co-processador segue uma sequência bem definida: primeiro os dados são carregados nas memórias via instruções de memória (Store Image, Store Weights, Store Bias e Store Beta), em seguida a instrução Start dispara o processo de inferência, que percorre a camada oculta, aplica a função de ativação tanh, processa a camada de saída e por fim executa o argmax para determinar o dígito classificado. O resultado fica disponível no barramento Data Out junto com a flag de Done indicando a conclusão da operação.
@@ -143,7 +143,7 @@ As funções de envio de dados "send_image", "send_weights", "send_bias" e "send
 
 Durante o desenvolvimento do driver, foi necessário considerar o formato de endianness utilizado pelo processador ARM da plataforma DE1-SoC. O ARM Cortex-A9 opera naturalmente em modo little endian, ou seja, o byte menos significativo é armazenado no menor endereço de memória.
 
-No envio dos valores de bias e beta para o co-processador, observou-se a necessidade de reorganizar os bytes dos dados de 16 bits antes da transmissão. Para isso, foi utilizada a instrução rev16, responsável por inverter a ordem dos bytes dentro de cada halfword de 16 bits.
+No envio dos valores de bias e beta para o coprocessador, observou-se a necessidade de reorganizar os bytes dos dados de 16 bits antes da transmissão. Para isso, foi utilizada a instrução rev16, responsável por inverter a ordem dos bytes dentro de cada halfword de 16 bits.
 
 Essa conversão foi necessária para garantir que os valores em ponto fixo Q4.12 fossem interpretados corretamente pelo hardware durante o processo de inferência. Sem essa correção, os bytes seriam lidos em ordem incorreta, comprometendo os resultados produzidos pelo co-processador.
 
@@ -157,7 +157,7 @@ A função "send_start" envia apenas o opcode 101 ao co-processador, disparando 
 
 ### Aplicação C (main.c)
 
-A aplicação em C atua como interface entre o usuário e o driver, oferecendo um menu interativo com 14 opções que permitem executar cada etapa do fluxo individualmente, de forma manual, ou de forma automática através da opção de inferência completa. No modo manual, o usuário pode enviar cada dado separadamente, inicializando o hardware, carregando e enviando a imagem, os pesos, o bias e o beta em etapas distintas, e por fim iniciando a inferência e lendo o resultado.
+A aplicação em C atua como interface entre o usuário e o driver,oferecendo um menu interativo com 14 opções que permitem executar cada etapa do fluxo individualmente, de forma manual, ou de forma automática através da opção de inferência completa. No modo manual, o usuário pode enviar cada dado separadamente, inicializando o hardware, carregando e enviando a imagem, os pesos, o bias e o beta em etapas distintas, e por fim iniciando a inferência e lendo o resultado.
 
 A função "inferencia_completa" encapsula todo o fluxo em sequência: inicializa o hardware caso ainda não tenha sido feito, aplica reset e clear, carrega e envia a imagem, os pesos, o bias e o beta, dispara a inferência via "send_start", aguarda o resultado via "polling" e imprime o dígito predito na tela. O carregamento dos arquivos binários é feito pela função auxiliar "carregar_arquivo", que abre o arquivo, lê exatamente o número de bytes esperado e fecha o arquivo, retornando erro caso a leitura seja incompleta.
 
@@ -170,7 +170,7 @@ A integração entre a aplicação C e o driver Assembly é feita através do ar
 Todo esse processo é automatizado pelo Makefile, que define quatro regras principais: "build", que compila os módulos C e Assembly separadamente e os linka em um único executável; "run", que executa o programa com "sudo"; "test", que executa o script de testes batch; e "clean", que remove os arquivos gerados pela compilação. Dessa forma, o desenvolvedor não precisa executar os comandos de compilação manualmente a cada alteração no código.
 
 ## Testes e Validação
-Esta seção descreve o processo de testes realizado pela equipe para validar o funcionamento do sistema, abrangendo tanto a depuração do driver em Assembly durante o desenvolvimento quanto a validação final por meio de um conjunto de imagens de dígitos numéricos.
+Esta seção descreve o processo de testes realizado pela equipe para validar o funcionamento do sistema, abrangendo tanto a depuração do driver em Assembl durante o desenvolvimento quanto a validação final por meio de um conjunto de imagens de dígitos numéricos.
 
 ### Metodologia de Testes
 
@@ -180,7 +180,7 @@ O fluxo do script consiste em montar uma sequência de inputs simulando a intera
 
 ### Depuração com GDB
 
-Durante o desenvolvimento do driver, o GDB foi utilizado como ferramenta de depuração para validar o comportamento do código Assembly em tempo de execução. Como o driver é implementado diretamente em Assembly ARM, qualquer erro em um registrador pode quebrar o fluxo silenciosamente, sem mensagens de erro visíveis. O GDB permitiu que a equipe inspecionasse o estado dos registradores a cada etapa, verificando se o valor montado da instrução estava correto antes de ser enviado ao co-processador via pio_data_in, se o mmap retornou um endereço virtual válido para a ponte LW, e se o polling estava testando o bit correto do pio_data_out para detectar o sinal de Done.A Figura 5 ilustra o uso do GDB durante a depuração do driver, mostrando o estado dos registradores no loop de envio da imagem.
+Durante o desenvolvimento do driver, o GDB foi utilizado como ferramenta de depuração para validar o comportamento do código Assembly em tempo de execução. Como o driver é implementado diretamente em Assembly ARM, qualquer erro em um registrador pode quebrar o fluxo silenciosamente, sem mensagens de erro visíveis. O GDB permitiu que a equipe inspecionasse o estado dos registradores a cada etapa, verificando se o valor montado da instrução estava correto antes de ser enviado ao co-processador via pio_data_in,se o mmap retornou um endereço virtual válido para a ponte LW, e se o polling estava testando o bit correto do pio_data_out para detectar o sinal de Done.A Figura 5 ilustra o uso do GDB durante a depuração do driver, mostrando o estado dos registradores no loop de envio da imagem.
 
 
 ![Depuração com GDB](gdb_debug_send_image.png)
