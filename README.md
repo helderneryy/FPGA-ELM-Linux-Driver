@@ -141,6 +141,14 @@ As funções "resetar" e "limpar" enviam pulsos nos bits 2 e 1 do "pio_signals",
 
 As funções de envio de dados "send_image", "send_weights", "send_bias" e "send_beta" montam as instruções seguindo o formato da ISA do co-processador, posicionando o opcode nos bits [2:0], o endereço e o dado nos campos correspondentes via deslocamentos e operações de OR, e então escrevem a instrução no "pio_data_in" seguida de um pulso de enable. Os pesos são enviados em dois ciclos por valor: primeiro a instrução de endereço (opcode 001) e em seguida a instrução de valor (opcode 010). Os valores de bias e beta são representados em ponto fixo Q4.12 e passam por "rev16" para correção de endianness antes do envio.
 
+Durante o desenvolvimento do driver, foi necessário considerar o formato de endianness utilizado pelo processador ARM da plataforma DE1-SoC. O ARM Cortex-A9 opera naturalmente em modo little endian, ou seja, o byte menos significativo é armazenado no menor endereço de memória.
+
+No envio dos valores de bias e beta para o co-processador, observou-se a necessidade de reorganizar os bytes dos dados de 16 bits antes da transmissão. Para isso, foi utilizada a instrução rev16, responsável por inverter a ordem dos bytes dentro de cada halfword de 16 bits.
+
+Essa conversão foi necessária para garantir que os valores em ponto fixo Q4.12 fossem interpretados corretamente pelo hardware durante o processo de inferência. Sem essa correção, os bytes seriam lidos em ordem incorreta, comprometendo os resultados produzidos pelo co-processador.
+
+Dessa forma, o driver garante que os dados enviados ao hardware estejam organizados na ordem esperada pelo co-processador, assegurando a correta interpretação dos valores durante as operações de leitura e escrita realizadas via MMIO.
+
 A função "send_start" envia apenas o opcode 101 ao co-processador, disparando o início da inferência. Em seguida, "polling" fica em loop lendo o "pio_data_out" até que o bit 4 (Done) seja 1, indicando que o co-processador concluiu. Por fim, "ler_resultado" isola os bits [3:0] do "pio_data_out", que contêm o dígito predito entre 0 e 9.
 
 ![Fluxo do Driver](fluxo%20de%20execução%20do%20driver.drawio.png)
@@ -207,8 +215,6 @@ DEV TECH. Tutorial Makefile em C. YouTube, 2020. Disponível em: https://youtu.b
 MATOS, Kamilly. Coprocessador de Imagens PBL SD. GitHub, 2025. Disponível em: https://github.com/kamillymatos/coprocessador-de-imagens-pbl-sd-2
 
 Um guia completo para o desenvolvimento de API. AppMaster. Disponível em: https://appmaster.io/pt/blog/um-guia-completo-para-o-desenvolvimento-da-api
-
-GANEKO, Yudi. O que é API (em 2 minutos). YouTube, 2025. Disponível em: https://youtu.be/Q-lyQ7BdDXE
 
 NASCIMENTO, Maike. Problema SD 2026.1. GitHub, 2026. Disponível em: https://github.com/DestinyWolf/
 Problema_SD_2026_1
