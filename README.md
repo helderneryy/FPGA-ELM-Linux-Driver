@@ -172,8 +172,6 @@ Todo esse processo é automatizado pelo Makefile, que define quatro regras princ
 ## Testes e Validação
 Esta seção descreve o processo de testes realizado pela equipe para validar o funcionamento do sistema, abrangendo tanto a depuração do driver em Assembl durante o desenvolvimento quanto a validação final por meio de um conjunto de imagens de dígitos numéricos.
 
-Durante os testes, foi observado que os valores de beta estavam sendo interpretados com os bytes invertidos durante a leitura pelo co-processador, resultando em valores incorretos na inferência. Para corrigir esse problema, foi utilizada a instrução "rev16", citada anteriormente na descrição das funções do arquivo funcoes.s, responsável por reorganizar os bytes dos dados de 16 bits antes do envio ao hardware, garantindo a interpretação correta dos valores em ponto fixo Q4.12.
-
 ### Metodologia de Testes
 
 Os testes foram realizados por meio de um script batch (teste_batch.sh), executado via make test. O script compila o projeto automaticamente, percorre um diretório com 100 imagens organizadas em subpastas por dígito, sendo 10 imagens de cada dígito de 0 a 9, executa o classificador para cada imagem e gera um relatório final em resultados.txt com o resultado de cada classificação e a acurácia geral do sistema.
