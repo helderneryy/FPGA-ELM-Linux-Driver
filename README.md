@@ -131,7 +131,7 @@ A solução desenvolvida é composta por três camadas que trabalham em conjunto
 
 O driver foi implementado inteiramente em Assembly ARM e organiza suas funções em torno de três PIOs mapeados a partir do endereço base 0xFF200000: pio_data_out (offset 0x00), utilizado para leitura do resultado e flags; pio_signals (offset 0x10), utilizado para envio de sinais de controle como enable, reset e clear; e pio_data_in (offset 0x20), utilizado para envio das instruções ao co-processador. A Figura 3 apresenta o mapeamento dos PIOs no Platform Designer, confirmando os endereços base utilizados pelo driver para acessar os registradores do co-processador via MMIO.
 
-![PIOs no Platform Designer](PIO%20(1).png)
+![PIOs no Platform Designer](PIO.png)
 
 *Figura 3: Mapeamento dos PIOs no Platform Designer*
 
